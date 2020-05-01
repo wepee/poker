@@ -153,11 +153,13 @@
   <ItemGroup>
     <ClCompile Include="class.cpp" />
     <ClCompile Include="function.cpp" />
+    <ClCompile Include="odrive.cpp" />
     <ClCompile Include="poker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="class.h" />
     <ClInclude Include="function.h" />
+    <ClInclude Include="odrive.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

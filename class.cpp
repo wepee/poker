@@ -8,7 +8,7 @@ Player::Player() {
 }
 
 
-void Player :: changeHand(){
+void Player :: changeHand() {
 
 }
 
@@ -30,3 +30,8 @@ int Hand::getScore(Hand secondHand) {
 
 }
 
+
+Card::Card() {
+
+
+}

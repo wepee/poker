@@ -1,9 +1,10 @@
 //Ce fichier contient les differentes classes du programme
 #pragma once
 #include<list>
-#include"string.h"
+#include<string>
 #include"function.h"
 
+using namespace std;
 
 /*
 Classe Joueur : elle contient la main du joueur et ses jetons
