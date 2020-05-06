@@ -1,8 +1,11 @@
 #include"Card.h"
 
+Card::Card(Shape shape, int _nb) : shape(shape),rank(_nb){
+	
+}
 
-Card::Card() {
+void Card::display() {
 
-
+	cout << rank << " de " << shape << endl;
 
 }

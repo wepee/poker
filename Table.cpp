@@ -1,7 +1,7 @@
 #include"Table.h"
 
 
-Table::Table() {
+Table::Table() : step(0), player() {
 
 
 

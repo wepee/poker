@@ -2,13 +2,14 @@
 //
 
 #include <iostream>
-
+#include"Hand.h"
 
 using namespace std;
 
 int main()
 {
-    cout << "Hello World!";
+	cout << "Hello World!";
 
+	Hand *deck = new Hand();
 
 }	

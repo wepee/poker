@@ -11,7 +11,7 @@ Classe Joueur : elle contient la main du joueur et ses jetons
 class Player {
 
 private:
-	Hand myHand; //la main du joueur (=ses cartes)
+	Hand deck; //la main du joueur (=ses cartes)
 	int coins;   //Ses jetons
 
 public:
