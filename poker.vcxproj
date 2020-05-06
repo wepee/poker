@@ -152,20 +152,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Card.cpp" />
-    <ClCompile Include="Table.cpp" />
     <ClCompile Include="function.cpp" />
     <ClCompile Include="Hand.cpp" />
     <ClCompile Include="odrive.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="poker.cpp" />
+    <ClCompile Include="Table.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.h" />
     <ClInclude Include="Hand.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Table.h" />
     <ClInclude Include="function.h" />
     <ClInclude Include="odrive.h" />
+    <ClInclude Include="Table.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
