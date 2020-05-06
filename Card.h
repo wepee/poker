@@ -1,22 +1,22 @@
-#pragma once
-#include<list>
-#include<string>
+ï»¿#pragma once
+#include <iostream>
 #include"function.h"
-
+#include<string>
 using namespace std;
 
+enum Shape {
 
-/*
-Classe Carte : elle represente une carte qui est définie par sa figure, sa forme et son nombre
-*/
-class Card {
-
-private:
-	string rank;	//Figure de la carte(Rien, Valet, Reine, Roi)
-	string shape;  //Forme de la carte (Trèfle, carreau, coeur, pique)
-	int nb;		  //Numero de la carte
-
-public:
-	Card();  //Constructeur
+	Heart, Tile, Clover, Pike
 
 };
+
+class Card {
+	Shape shape;  //Forme de la carte (TrÃ¨fle, carreau, coeur, pique)
+	int rank;	//Numero de la carte
+
+public:
+	Card(Shape _shape = Shape::Pike, int _nb=1);
+	void display();
+};
+
+	
