@@ -11,4 +11,25 @@ int main()
     cout << "Hello World!";
 
 	Hand* fdp = new Hand();
+
+	Hand* fdp2 = &fdp->giveHand(5);
+
+	cout << "Le joueur 1 possede les cartes suivantes :" << endl;
+	fdp2->display();
+
+	Hand* fdp3 = &fdp->giveHand(5);
+
+	cout << "Le joueur 1 possede les cartes suivantes :" << endl;
+	fdp3->display();
+
+
+	fdp->display();
+
+	cout << "*****************************************************************************************" << endl;
+
+
+	fdp2->getScore(*fdp3);
+
+	
+
 }	
