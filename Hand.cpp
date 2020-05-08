@@ -12,7 +12,6 @@ Hand::Hand() {
 }
 
 Hand::Hand(vector<Card> deck) : cards(deck) {
-
 }
 
 void Hand::shuffle() {
@@ -26,7 +25,7 @@ void Hand::shuffle() {
 	}
 }
 
-
+// sorte de surcharge de < sur card
 bool sortByRank(Card& a, Card& b) {
 	return (a.getRank() < b.getRank());
 }
@@ -37,14 +36,15 @@ int Hand::getScore(Hand secondHand) {
 	/*
 	score : 
 
-	paires : 10*rank
+	paires : 100*rank
 
-	: rank * 100
+	-------: rank * 10 000
 
-	rank * 10 000;
+	-------: rank * 1 000 000;
 
 	*/
 	 int score = 0;
+	 int paire = 0;
 
 
 	//on fusionne les 2 paquets dans temp
@@ -55,18 +55,19 @@ int Hand::getScore(Hand secondHand) {
 	sort(temp.begin(), temp.end(),sortByRank);
 
 
-
 	//recherche des paires
-	for (vector<Card>::iterator it = cards.begin(); it != cards.end()-1; ++it) {
+	for (vector<Card>::iterator it = temp.begin(); it != temp.end()-1; ++it) {
 		if (it->getRank() == (it + 1)->getRank()) {
-			score += 10*it->getRank();
+			score += 100*it->getRank();
 			cout << " Vous avez une paire de " << it->getRank()<<endl;
+			paire++;
 		}
 	}
+	//comptage des paires
 	if (score == 0)
 		cout << "il n'y a pas de paire" << endl;
 	else
-		cout << "il y a" << score / 100 << " paires" << endl;
+		cout << "il y a " << paire << " paire(s)" << endl;
 
 
 
@@ -76,7 +77,7 @@ int Hand::getScore(Hand secondHand) {
 
 Hand Hand::giveHand(int _nb) {
 
-	
+
 	vector<Card> deck;
 
 	//on remplit le paquet
@@ -88,7 +89,6 @@ Hand Hand::giveHand(int _nb) {
 		//on la supprime du paquet d'origine
 		cards.erase(cards.begin() + j);
 	}
-		
 
 	return Hand(deck);
 }
@@ -97,4 +97,6 @@ Hand Hand::giveHand(int _nb) {
 void Hand::display() {
 	for (vector<Card>::iterator it = cards.begin(); it != cards.end(); ++it)
 		it->display();
+
+	cout << endl;
 }
