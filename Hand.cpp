@@ -126,8 +126,10 @@ Hand Hand::giveHand(int _nb) {
 
 
 void Hand::display() {
+
 	for (vector<Card>::iterator it = cards.begin(); it != cards.end(); ++it)
 		it->display();
 
 	cout << endl;
+
 }

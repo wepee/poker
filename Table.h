@@ -14,6 +14,7 @@ class Table : Player {
 private : 
 	int step;
 	Player player;
+	bool isHost;
 
 public : 
 	Table();
