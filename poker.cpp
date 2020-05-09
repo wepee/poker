@@ -29,6 +29,4 @@ int main()
 
 	cout <<"score : "<< fdp2.getScore(fdp3)<<endl <<endl;
 
-	
-
-}	
+	}	

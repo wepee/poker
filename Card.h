@@ -19,8 +19,7 @@ public:
 	Card(Shape _shape = Shape::Pike, int _nb=1);  //constructeur
 	void display();								 // Afficher la carte
 	Shape getShape();							// Accesseur Forme
-	int getRank() { return rank; };						// Accesseur Rang
-
+	int getRank() { return rank; };			// Accesseur Rang
 };
 
 	

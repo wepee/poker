@@ -26,4 +26,3 @@ void Card::display() {
 	
 
 }
-

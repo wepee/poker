@@ -1,15 +1,22 @@
 #include"Hand.h"
 
-Hand::Hand() {
+Hand::Hand(bool empty) {
 
-	// Pour chaque shape
-	for (Shape i = Shape::Heart; i <= Shape::Pike; i = static_cast<Shape>(i + 1))
-		//pour chaque rank
-		for (int j = 1;j <= 13;j++)
-			//ajouter la carte au paquet
-			cards.push_back(Card(i,j));
+
+	if (!empty) {
+		// Pour chaque shape
+		for (Shape i = Shape::Heart; i <= Shape::Pike; i = static_cast<Shape>(i + 1))
+			//pour chaque rank
+			for (int j = 1;j <= 13;j++)
+				//ajouter la carte au paquet
+				cards.push_back(Card(i, j));
+
+	}
+
 
 }
+
+
 
 Hand::Hand(vector<Card> deck) : cards(deck) {
 }
@@ -31,8 +38,8 @@ bool sortByRank(Card& a, Card& b) {
 }
 
 
-int Hand::getScore(Hand secondHand) {
-
+int Hand::getScore(Hand& secondHand) {
+	srand(time(NULL));
 	/*
 	score : 
 
@@ -48,7 +55,7 @@ int Hand::getScore(Hand secondHand) {
 
 
 	//on fusionne les 2 paquets dans temp
-	vector<Card> temp = secondHand.cards;
+	vector<Card> temp = secondHand.getCards();
 	temp.insert(temp.end(), cards.begin(), cards.end());
 
 	//on trie le paquet
@@ -56,12 +63,18 @@ int Hand::getScore(Hand secondHand) {
 
 
 	//recherche des paires
-	for (vector<Card>::iterator it = temp.begin(); it != temp.end()-1; ++it) {
+	for (vector<Card>::iterator it = temp.begin(); it != temp.end()-1; it++) {
 		if (it->getRank() == (it + 1)->getRank()) {
 			score += 100*it->getRank();
-			cout << " Vous avez une paire de " << it->getRank()<<endl;
+			cout << " Vous avez une paire de " << map(it->getRank())<<endl;
+
+			//Permet de ne compter qu'une paire quand il y a 3 cartes de meme rang
+			if(it!=temp.end()-2)
+				it++; 
+		
 			paire++;
 		}
+
 	}
 	//comptage des paires
 	if (score == 0)
@@ -77,21 +90,39 @@ int Hand::getScore(Hand secondHand) {
 
 Hand Hand::giveHand(int _nb) {
 
+	try {
+		vector<Card> deck;
 
-	vector<Card> deck;
+		cout << "on veut donner " << _nb << " cartes depuis un paquet en contenant " << cards.size()<<endl;
 
-	//on remplit le paquet
-	for (int i = 0; i < _nb; i++) {
-		//on choisit une carte au hasard
-		int j = rand() % cards.size();
-		//on la met dans le paquet de destination
-		deck.push_back(cards[j]);
-		//on la supprime du paquet d'origine
-		cards.erase(cards.begin() + j);
+
+		//Le nombre de cartes à piocher ne doit pas exceder celui de la pioche
+		if (_nb > cards.size())
+			throw(string("Nombre de cartes insuffisant pour la distribution"));
+		else {
+
+			//on remplit le paquet
+			for (int i = 0; i < _nb; i++) {
+				//on choisit une carte au hasard
+				int j = rand() % cards.size();
+				//on la met dans le paquet de destination
+				deck.push_back(cards[j]);
+				//on la supprime du paquet d'origine
+				cards.erase(cards.begin() + j);
+			}
+		
+			return Hand(deck);
+
+		}
+
+	}
+	catch(string const &erreur){
+		cout << "impossible : "<< erreur << endl;
+		return Hand(true);
 	}
 
-	return Hand(deck);
 }
+
 
 
 void Hand::display() {
