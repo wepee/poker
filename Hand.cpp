@@ -33,9 +33,9 @@ void Hand::shuffle() {
 }
 
 // sorte de surcharge de < sur card
-bool sortByRank(Card& a, Card& b) {
-	return (a.getRank() < b.getRank());
-}
+//bool sortByRank(Card& a, Card& b) {
+//	return (a.getRank() < b.getRank());
+//}
 
 
 int Hand::getScore(Hand& secondHand) {

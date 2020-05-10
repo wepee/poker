@@ -153,7 +153,6 @@
   <ItemGroup>
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="function.cpp" />
-    <ClCompile Include="Hand.cpp" />
     <ClCompile Include="odrive.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="poker.cpp" />
@@ -161,7 +160,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.h" />
-    <ClInclude Include="Hand.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="function.h" />
     <ClInclude Include="odrive.h" />

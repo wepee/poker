@@ -2,7 +2,7 @@
 //
 
 #include <iostream>
-#include "Hand.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -10,18 +10,18 @@ int main()
 {
     cout << "Hello World!"<<endl << endl;
 
-	Hand* fdp = new Hand();
+	Player* fdp = new Player();
 
-	Hand fdp2 = fdp->giveHand(5);
+	Player fdp2 = fdp->giveHand(5);
 
 	cout << "la table possede les cartes suivantes :" << endl;
-	fdp2.display();
+	fdp2.displayCards();
 	
 
-	Hand fdp3 = fdp->giveHand(5);
+	Player fdp3 = fdp->giveHand(5);
 
 	cout << "Vous possedez les cartes suivantes :" << endl;
-	fdp3.display();
+	fdp3.displayCards();
 
 
 	cout << "*****************************************************************************************" << endl << endl;;
