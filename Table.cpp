@@ -2,7 +2,7 @@
 
 //detrminer si host ou non
 // chaine de caractere connu pour savoir s'il y a que le host de co, suppr par l'autre
-Table::Table():Player(), step(Step::flop) {
+Table::Table():Player(), step(Step::river) {
 	
 
 	player_h = giveHand(2);
@@ -12,36 +12,42 @@ Table::Table():Player(), step(Step::flop) {
 }
 
 void Table::dispJeu() {
-	cout << "--------------------------------------------------------------" << endl;
+	cout << "-------------------------------------------------------------------------------------" << endl;
 	cout << "  " << map(getStep()) << "             jeton : " << this->getPlayerc().getCoins()<< "         " << endl; 
 	switch (this->step) {
 	case 0:
-		cout << "Pre-flop"; 
+		displayCards(0);
+		cout << endl << endl;
+		player_c.displayCards();
 		break;
 	case 1:
-		displayCards(5);
-
+		displayCards(3);
 		cout << endl << endl;
-		player_c.displayCards(2);
+		player_c.displayCards();
 		break;
 	case 2:
-		cout << "Turn";
+		displayCards(4);
+		cout << endl << endl;
+		player_c.displayCards();
 		break;
 	case 3:
-		cout << "River";
+		displayCards(5);
+		cout << endl << endl;
+		player_c.displayCards();
 		break;
 	default:
 		break;
 	}
 
-		cout << "      | ";
+
+	cout << "-------------------------------------------------------------------------------------" << endl;
 }
 
 void Table::displayCards(int nb) {
 
 	for (int i = 0; i < nb; i++) {
 		deck_t[i].display();
-		cout << endl;
+		cout << " | ";
 	}
-
+	cout << endl;
 }

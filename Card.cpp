@@ -8,19 +8,19 @@ void Card::display() {
 
 	switch (rank) {
 	case 1:
-		cout << "As de " << map(shape) << endl;
+		cout << "As de " << map(shape) ;
 		break;
 	case 13:
-		cout << "Roi" << " de " << map(shape) << endl;
+		cout << "Roi" << " de " << map(shape) ;
 		break;
 	case 12:
-		cout << "Reine" << " de " << map(shape) << endl;
+		cout << "Reine" << " de " << map(shape) ;
 		break;
 	case 11:
-		cout << "Valet" << " de " << map(shape) << endl;
+		cout << "Valet" << " de " << map(shape);
 		break;
 	default:
-		cout << rank << " de " << map(shape) << endl;
+		cout << rank << " de " << map(shape) ;
 		break;
 	}
 
