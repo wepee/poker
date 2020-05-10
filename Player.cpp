@@ -1,4 +1,5 @@
 #include"Player.h"
+//
 
 Player::Player(bool empty) : coins(0) {
 
