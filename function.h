@@ -9,3 +9,5 @@ using namespace std;
 string map(enum Shape _shape);
 
 string map(int _rank);
+
+string map(enum Step _step);

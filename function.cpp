@@ -21,7 +21,7 @@ string map(int _rank) {
 
 
 	switch (_rank) {
-	case 1:
+	case 14:
 		return "As";
 		break;
 	case 11:
@@ -34,6 +34,26 @@ string map(int _rank) {
 		return "Roi";
 	default:
 		return std::to_string(_rank);
+	}
+
+}
+string map(enum Step _step) {
+
+
+	switch (_step) {
+	case 0:
+		return "Pre-flop";
+		break;
+	case 1:
+		return "Flop";
+		break;
+	case 2:
+		return "Turn";
+		break;
+	case 3:
+		return "River";
+	default:
+		return "étape non reconnue";
 	}
 
 }

@@ -11,12 +11,25 @@ Classe Table : c'est l'objet qui déroule le jeu
 			   elle herite de Joueur car on la considere comme un joueur
 */
 class Table : Player {
-private : 
-	int step;
-	Player player;
+private:
+	Step step;
+	Player player_h;
+	Player player_c;
+	vector<Card> deck_t;
 	bool isHost;
 
-public : 
+public:
 	Table();
+	void dispJeu();
+	Step getStep() { return step; };
+	Player getPlayerh() { return player_h; };
+	Player getPlayerc() { return player_c; };
+
+	
 
 };
+
+	enum Step 
+	{
+		pre_flop, flop, turn,river
+	}; 

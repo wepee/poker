@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "Player.h"
+#include "Table.h"
 
 using namespace std;
 
@@ -10,23 +11,22 @@ int main()
 {
     cout << "Hello World!"<<endl << endl;
 
-	Player* fdp = new Player();
-
-	Player fdp2 = fdp->giveHand(5);
+	
+	Table fdp2;
 
 	cout << "la table possede les cartes suivantes :" << endl;
-	fdp2.displayCards();
+	fdp2.dispJeu();
 	
 
-	Player fdp3 = fdp->giveHand(5);
+	//Player fdp3 = fdp->giveHand(2);
 
-	cout << "Vous possedez les cartes suivantes :" << endl;
-	fdp3.displayCards();
+	//cout << "Vous possedez les cartes suivantes :" << endl;
+	//fdp3.displayCards();
 
 
 	cout << "*****************************************************************************************" << endl << endl;;
 
 
-	cout <<"score : "<< fdp2.getScore(fdp3)<<endl <<endl;
+	//cout <<"score : "<< fdp2.getScore(fdp3)<<endl <<endl;
 
 	}	
