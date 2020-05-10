@@ -21,7 +21,7 @@ string map(int _rank) {
 
 
 	switch (_rank) {
-	case 1:
+	case 14:
 		return "As";
 		break;
 	case 11:

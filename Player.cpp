@@ -7,7 +7,7 @@ Player::Player(bool empty) : coins(0) {
 		// Pour chaque shape
 		for (Shape i = Shape::Heart; i <= Shape::Pike; i = static_cast<Shape>(i + 1))
 			//pour chaque rank
-			for (int j = 1;j <= 13;j++)
+			for (int j = 2;j <= 14;j++)
 				//ajouter la carte au paquet
 				cards.push_back(Card(i, j));
 
@@ -17,7 +17,7 @@ Player::Player(bool empty) : coins(0) {
 }
 
 
-Player::Player(vector<Card> deck) : cards(deck) {
+Player::Player(vector<Card> deck) : cards(deck), coins(0) {
 }
 
 
@@ -52,6 +52,8 @@ int Player::getScore(Player& secondHand) {
 	*/
 	int score = 0;
 	int paire = 0;
+	int brelan = 0;
+
 
 
 	//on fusionne les 2 paquets dans temp
@@ -63,17 +65,47 @@ int Player::getScore(Player& secondHand) {
 
 
 	//recherche des paires
-	for (vector<Card>::iterator it = temp.begin(); it != temp.end() - 1; it++) {
-		if (it->getRank() == (it + 1)->getRank()) {
-			score += 100 * it->getRank();
-			cout << " Vous avez une paire de " << map(it->getRank()) << endl;
+	for (vector<Card>::iterator it = temp.begin(); it != temp.end(); it++) {
+		
+		//Carré
+		if (it->getRank() == (it + 1)->getRank() && it->getRank() == (it + 2)->getRank() && it->getRank() == (it + 3)->getRank()) {
+			cout << "Il y a un carre de "<< map(it->getRank()) <<endl;
+			score += 1000000*it->getRank();
+
+			//si on trouve un carré passer 3 cartes
+			if (it < temp.end() - 3)
+				it += 3;
+			//Si on est à la fin du paquet on arrete
+			else
+				break;
+		}
+		//Brelan 	
+		else if (it->getRank() == (it + 1)->getRank() && it->getRank() ==  (it + 2)->getRank()) {
+			score += 10000 * it->getRank();
+			cout << " Vous avez un brelan de " << map(it->getRank()) << endl;
 
 			//Permet de ne compter qu'une paire quand il y a 3 cartes de meme rang
 			if (it != temp.end() - 2)
-				it++;
+				it+=2;
+			else
+				break;
 
-			paire++;
+			brelan++;
 		}
+		//paire
+			
+		else if (it->getRank() == (it + 1)->getRank()) {
+			cout << " Vous avez une paire de " << map(it->getRank()) << endl;
+			score += 100 * it->getRank();
+
+			//Permet de ne compter qu'une paire quand il y a 3 cartes de meme rang
+			if (it >= temp.end() - 1) 
+				it++;
+			else 
+				break;
+		}
+
+
 
 	}
 	//comptage des paires

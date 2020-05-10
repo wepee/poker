@@ -12,13 +12,13 @@ int main()
 
 	Player* fdp = new Player();
 
-	Player fdp2 = fdp->giveHand(5);
+	Player fdp2(fdp->giveHand(20));
 
 	cout << "la table possede les cartes suivantes :" << endl;
 	fdp2.displayCards();
 	
 
-	Player fdp3 = fdp->giveHand(5);
+	Player fdp3(fdp->giveHand(12));
 
 	cout << "Vous possedez les cartes suivantes :" << endl;
 	fdp3.displayCards();
