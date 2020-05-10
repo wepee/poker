@@ -158,13 +158,14 @@ vector<Card> Player::giveHand(int _nb) {
 
 
 
-void Player::displayCards() {
+void Player::displayCards(int nb) {
 
-	for (vector<Card>::iterator it = cards.begin(); it != cards.end(); ++it)
+	for (int i = 0; i <= nb; i++) {
+		vector<Card>::iterator it = cards.begin();
 		it->display();
-
-	cout << endl;
-
+		it++;
+		cout << endl;
+	}
 }
 
 

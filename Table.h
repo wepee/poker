@@ -24,7 +24,7 @@ public:
 	Step getStep() { return step; };
 	Player getPlayerh() { return player_h; };
 	Player getPlayerc() { return player_c; };
-
+	void displayCards(int nb = 5);
 	
 
 };

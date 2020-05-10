@@ -22,7 +22,7 @@ public:
 	Player(bool empty = false);//Constructeur par defaut
 	Player(vector<Card> deck);//Constructeur 
 	void shuffle();			// Mélange le paquet
-	void displayCards();			//Affiche le paquet de cartes
+	void displayCards(int nb = 5);			//Affiche le paquet de cartes
 	vector <Card> getCards() { return cards; }; //accesseur
 	int getCoins() { return coins; }; //accesseur jeton
 	int getScore(Player& secondHand);		//Calcule le score de la meilleure combinaison entre 2 mains
