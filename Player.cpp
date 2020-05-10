@@ -70,7 +70,7 @@ int Player::getScore(Player& secondHand) {
 		
 		//Carré
 		if (it->getRank() == (it + 1)->getRank() && it->getRank() == (it + 2)->getRank() && it->getRank() == (it + 3)->getRank()) {
-			cout << "Il y a un carre de "<< map(it->getRank()) <<endl;
+			cout << "Vous avez un carre de "<< map(it->getRank()) <<endl;
 			score += 1000000*it->getRank();
 
 			//si on trouve un carré passer 3 cartes

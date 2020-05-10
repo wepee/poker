@@ -5,15 +5,15 @@
 Table::Table():Player(), step(Step::pre_flop) {
 	
 
-	player_h = this->giveHand(2);
-	player_c = this->giveHand(2);
-	this->deck_t= this->giveHand(5);
+	player_h = giveHand(2);
+	player_c = giveHand(2);
+	deck_t= giveHand(5);
 
 }
 
 void Table::dispJeu() {
 	cout << "--------------------------------------------------------------" << endl;
-	cout << "  " << map(getStep()) << "             jeton : " << this->getPlayerc().getcoins()<< "         " << endl; 
+	cout << "  " << map(getStep()) << "             jeton : " << this->getPlayerc().getCoins()<< "         " << endl; 
 	switch (this->step) {
 	case 0:
 		cout << "Pre-flop";
@@ -26,8 +26,9 @@ void Table::dispJeu() {
 		break;
 	case 3:
 		cout << "River";
+		break;
 	default:
-		
+		break;
 	}
 
 		cout << "      | ";
