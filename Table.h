@@ -25,7 +25,8 @@ public:
 	Player getPlayerh() { return player_h; };
 	Player getPlayerc() { return player_c; };
 	void displayCards(int nb = 5);
-	
+	void avancejeu();
+	void lancementMain();
 
 };
 
