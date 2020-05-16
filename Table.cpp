@@ -32,7 +32,7 @@ void Table::dispJeu() {
 		break;
 	case 3:
 		displayCards(5);
-		cout << endl << endl;
+		cout << endl << "          ";
 		player_c.displayCards();
 		break;
 	default:
