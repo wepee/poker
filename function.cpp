@@ -58,3 +58,21 @@ string map(enum Step _step) {
 
 }
 
+void line(int size, const char* car, bool lineBreak) {
+	for (int i = 0; i < size; i++)
+		cout << car;
+
+	if(lineBreak)
+		cout << endl;
+};
+
+void lineBreak(int nb) {
+	for (int i = 0; i < nb; i++)
+		cout << endl ;
+}
+
+void disp(string message) {
+
+	cout << message << endl;
+
+}

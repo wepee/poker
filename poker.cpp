@@ -7,9 +7,15 @@
 
 using namespace std;
 
+ const int WSIZE = 80;
+
+
 int main()
 {
-    cout << "Hello World!"<<endl << endl;
+
+	system("mode con LINES=20 COLS=80");
+
+	cout << "Hello World!"<<endl << endl;
 
 	
 	Table fdp2;
@@ -24,9 +30,7 @@ int main()
 	//fdp3.displayCards();
 
 
-	cout << endl<<"*****************************************************************************************" << endl << endl;;
-
-
 	//cout <<"score : "<< fdp2.getScore(fdp3)<<endl <<endl;
+
 
 	}	

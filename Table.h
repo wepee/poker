@@ -34,3 +34,6 @@ public:
 	{
 		pre_flop, flop, turn,river
 	}; 
+
+
+	extern const int WSIZE;
