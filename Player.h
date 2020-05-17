@@ -33,3 +33,5 @@ public:
 	int getMise() { return mise; }; //accesseur jeton
 
 };
+
+extern const int WSIZE;

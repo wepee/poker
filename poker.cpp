@@ -24,13 +24,8 @@ int main()
 	fdp2.dispJeu();
 	
 
-	//Player fdp3 = fdp->giveHand(2);
 
-	//cout << "Vous possedez les cartes suivantes :" << endl;
-	//fdp3.displayCards();
-
-
-	//cout <<"score : "<< fdp2.getScore(fdp3)<<endl <<endl;
-
+	system("PAUSE");
+	return 0;
 
 	}	

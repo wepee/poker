@@ -160,7 +160,7 @@ vector<Card> Player::giveHand(int _nb) {
 
 void Player::displayCards() {
 
-	line(20, " ", false);
+	line(WSIZE/4, " ", false);
 
 	for (vector<Card>::iterator it = cards.begin(); it != cards.end(); ++it){
 
