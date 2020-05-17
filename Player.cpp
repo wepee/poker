@@ -160,12 +160,20 @@ vector<Card> Player::giveHand(int _nb) {
 
 void Player::displayCards() {
 
+	line(20, " ", false);
+
 	for (vector<Card>::iterator it = cards.begin(); it != cards.end(); ++it){
+
+		if(it==cards.begin())
+			cout << " | ";
+
 		it->display();
 		cout << " | ";
 }
 	cout << endl;
 }
+
+
 
 
 

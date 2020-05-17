@@ -12,40 +12,56 @@ Table::Table():Player(), step(Step::river) {
 }
 
 void Table::dispJeu() {
-	cout << "-------------------------------------------------------------------------------------" << endl;
-	cout << "  " << map(getStep()) << "             jeton : " << this->getPlayerc().getCoins()<< "         " << endl; 
+
+	system("cls");
+
+	line(WSIZE);
+	cout << "  " << map(getStep()) << "             jeton : " << this->getPlayerc().getCoins() << endl;
+	line(WSIZE);
+
+	lineBreak(2);
+	disp("La table possede les cartes suivantes :");
+	lineBreak(1);
+
 	switch (this->step) {
 	case 0:
+		line(15, " ", false);
 		displayCards(0);
-		cout << endl << endl;
-		player_c.displayCards();
 		break;
 	case 1:
+		line(10, " ", false);
 		displayCards(3);
-		cout << endl << endl;
-		player_c.displayCards();
 		break;
 	case 2:
+		line(5, " ", false);
 		displayCards(4);
-		cout << endl << endl;
-		player_c.displayCards();
 		break;
 	case 3:
+		line(3, " ", false);
 		displayCards(5);
-		cout << endl << endl;
-		player_c.displayCards();
 		break;
 	default:
 		break;
 	}
 
+	lineBreak(1);
+	line(80, "*");
+	
 
-	cout << "-------------------------------------------------------------------------------------" << endl;
+	cout << endl << " Vous possedez les cartes suivantes : " <<endl ;
+
+	player_c.displayCards();
+
+	line(WSIZE);
+
 }
 
 void Table::displayCards(int nb) {
 
 	for (int i = 0; i < nb; i++) {
+		if(i==0)
+			cout << " | ";
+
 		deck_t[i].display();
 		cout << " | ";
 	}
