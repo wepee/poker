@@ -163,6 +163,7 @@ void Player::displayCards() {
 	for (vector<Card>::iterator it = cards.begin(); it != cards.end(); ++it){
 		it->display();
 		cout << " | ";
+
 }
 	cout << endl;
 }
