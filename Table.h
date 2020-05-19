@@ -2,6 +2,8 @@
 #include<list>
 #include<string>
 #include"Player.h"
+#include <fstream>
+#include "odrive.h"
 
 using namespace std;
 
@@ -17,9 +19,10 @@ private:
 	Player player_c;
 	vector<Card> deck_t;
 	bool isHost;
+	ODrive od;
 
 public:
-	Table();
+	Table(string key);
 	void dispJeu();
 	Step getStep() { return step; };
 	Player getPlayerh() { return player_h; };
@@ -27,8 +30,12 @@ public:
 	void displayCards(int nb = 5);
 	void avancejeu();
 	void lancementMain();
-
+	void send(string message) { od.write(message); };
+	string read() { return od.read(); };
+	~Table() { if (isHost) od.deleteCommFile(); }; 
 };
+
+
 
 	enum Step 
 	{

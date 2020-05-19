@@ -24,10 +24,16 @@ using namespace std;
  * @param odDriveDir the path of the mounting point of the drive
  * @param debugMode  output odrive information to the console
  */
-ODrive::ODrive(string odAgentDir, string odDriveDir, bool debugMode)
+ODrive::ODrive(string _baseDir, string _roomId, string odAgentDir, string odDriveDir, bool debugMode)
 {
     ostringstream osAgent,osDrive;
     string logFile="odrive_class.log";
+
+	//setteurs
+	baseDir = _baseDir;
+	roomDir = baseDir +'/'+_roomId;
+	commFile = roomDir + "/commFile.txt";
+
 
 #ifdef __unix__
     osAgent<<getenv("HOME")<<'/'<<odAgentDir<<"/bin/odrive";
@@ -35,7 +41,7 @@ ODrive::ODrive(string odAgentDir, string odDriveDir, bool debugMode)
     redirString_=" >> "+logFile+" 2>&1";
 #elif defined(_WIN32) || defined(WIN32)
     osAgent<<getenv("HOMEDRIVE")<<getenv("HOMEPATH")<<'\\'<<odAgentDir<<"\\bin\\odrive";
-    osDrive<<getenv("HOMEDRIVE")<<getenv("HOMEPATH")<<'\\'<<odDriveDir<<"\\Google Drive";
+	osDrive << getenv("HOMEDRIVE") << getenv("HOMEPATH") << '\\' << odDriveDir << "\\Google Drive" << "\\info-poker";
     redirString_=" >> "+logFile+" 2>&1";
 #endif
 
@@ -153,8 +159,6 @@ bool ODrive::isDir(string dir)
 }
 
 
-
-
 void ODrive::waitForChange(string file)
 {
     string odfile=odDrivePath_+'/'+file;
@@ -183,3 +187,21 @@ void ODrive::waitForChange(string file)
 
 }
 
+string ODrive::read() {
+	waitForChange(commFile);
+	if (ifstream(getFullName(commFile)).good())
+	{
+		ifstream ifile(getFullName(commFile));
+		string text;
+		getline(ifile, text);
+		return text;
+	}
+}
+
+
+void ODrive::write(string message) {
+	ofstream ofile(getFullName(commFile));
+	ofile << message << endl;
+	ofile.close();
+	refresh(roomDir);
+}

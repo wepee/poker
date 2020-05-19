@@ -2,8 +2,35 @@
 
 //detrminer si host ou non
 // chaine de caractere connu pour savoir s'il y a que le host de co, suppr par l'autre
-Table::Table():Player(), step(Step::river) {
-	// check sur drive si host ou non
+Table::Table(string key):Player(), step(Step::river),od("poker",key) {
+
+	// repertoire mere
+	string baseDir = "poker";
+
+
+	// mise en place de l'arborencence des fichiers de communication
+	string roomDir = baseDir + '/' + key;
+	string commFile = roomDir + "/commFile.txt";
+
+	cout << "Attente de l'autre joueur" << endl;
+
+	// Initialize the room directory
+	od.refresh(baseDir);
+
+	// si la salle n'existe pas 
+	if (!od.isDir(roomDir))
+	{
+		//cette instance est l'hote
+		isHost = true;
+		// création
+		od.mkDir(roomDir);
+		od.refresh(baseDir);
+	}
+	// Else synchronize the room dir and possibly the comm file
+	else {
+		od.sync(roomDir);
+		od.sync(commFile);
+	}
 
 	player_h = giveHand(2);
 	player_c = giveHand(2);
@@ -72,8 +99,6 @@ void Table::dispJeu() {
 	line(WSIZE);
 
 }
-
-
 
 void Table::lancementMain() {
 	
