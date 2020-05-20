@@ -76,3 +76,38 @@ void disp(string message) {
 	cout << message << endl;
 
 }
+
+Card toString(string text) {
+
+	Shape shape;
+	int rank; 
+
+	for (Shape i = Shape::Heart; i <= Shape::Pike; i = static_cast<Shape>(i + 1)) {
+		size_t found = text.find(i);
+		if (found != std::string::npos)
+		{
+			shape = i;
+			rank = int(text.at('*') + 1);
+		}
+
+	}
+
+	return Card(shape,rank);
+}
+
+string toCard(Card _card) {
+
+	switch (_card.getShape()) {
+	case 0: return "coeur*" + _card.getRank();
+		break;
+	case 1: return "trefle*" + _card.getRank();
+		break;
+	case 2: return "pique*" + _card.getRank();
+		break;
+	case 3: return "carreau*" + _card.getRank();
+		break;
+	default: return "n'existe pas*" + _card.getRank();
+		break;
+	}
+
+}

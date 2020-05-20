@@ -5,12 +5,17 @@ Player::Player(bool empty) : coins(0) {
 
 
 	if (!empty) {
+		int k = 0;
 		// Pour chaque shape
 		for (Shape i = Shape::Heart; i <= Shape::Pike; i = static_cast<Shape>(i + 1))
 			//pour chaque rank
-			for (int j = 2;j <= 14;j++)
+			
+			for (int j = 2; j <= 14; j++) {
 				//ajouter la carte au paquet
+				k++;
 				cards.push_back(Card(i, j));
+			}
+
 
 	}
 

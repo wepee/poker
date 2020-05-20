@@ -18,8 +18,10 @@ class Card {
 public:
 	Card(Shape _shape = Shape::Pike, int _nb=1);  //constructeur
 	void display();								 // Afficher la carte
-	Shape getShape();							// Accesseur Forme
+	Shape getShape() {return shape;};			// Accesseur Forme
 	int getRank() { return rank; };			// Accesseur Rang
+	string static toString(Card _card);
+	Card static toCard(string text);
 };
 
 	
