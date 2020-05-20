@@ -3,7 +3,7 @@
 
 string map(enum Shape _shape) {
 	switch (_shape) {
-	case 0: return "Coeur";
+	case 0: return "coeur";
 		break;
 	case 1: return "trefle";
 		break;

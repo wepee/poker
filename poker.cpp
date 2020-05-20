@@ -29,7 +29,7 @@ int main()
 	Card card(Shape::Pike, 33);
 
 	
-	Card::taCards(string("|pique*4|pique*5|pique*3"));
+	Card::toCards(string("carreau*4|pique*5|pique*3"));
 
 
 

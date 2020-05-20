@@ -39,7 +39,7 @@ Card Card::toCard(string text) {
 	int rank;
 
 	for (Shape i = Shape::Heart; i <= Shape::Pike; i = static_cast<Shape>(i + 1)) {
-		size_t found = text.find("carreau");
+		size_t found = text.find(map(i));
 		if (found != std::string::npos)
 		{
 			shape = i;
@@ -73,7 +73,7 @@ Card Card::toCard(string text) {
 
 
  
- vector<Card> Card::taCards(string chaine)
+ vector<Card> Card::toCards(string chaine)
  {
 	 vector<Card> list;
 	 stringstream ss(chaine);
@@ -81,7 +81,8 @@ Card Card::toCard(string text) {
 	 char delim ='|';
 	 while (getline(ss, sousChaine, delim))
 	 {
-		 list.push_back(Card::toCard(sousChaine));
+		 if(sousChaine != "")
+			list.push_back(Card::toCard(sousChaine));
 	 }
 	 return list;
  }

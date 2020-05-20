@@ -23,8 +23,8 @@ public:
 	int getRank() { return rank; };			// Accesseur Rang
 	string static toString(Card _card);
 	Card static toCard(string text);
+	//vector<Card> static toCards(string text);
 	vector<Card> static toCards(string text);
-	vector<Card> static taCards(string text);
 };
 
 	

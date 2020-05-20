@@ -18,7 +18,7 @@ private:
 	Player player_h;
 	Player player_c;
 	vector<Card> deck_t;
-	bool isHost;
+	bool isHost = false;
 	ODrive od;
 
 public:
