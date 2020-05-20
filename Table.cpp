@@ -26,7 +26,7 @@ Table::Table(string key):Player(), step(Step::river),od("poker",key) {
 		od.mkDir(roomDir);
 		od.refresh(baseDir);
 	}
-	// Else synchronize the room dir and possibly the comm file
+	// sinon on sychronise
 	else {
 		od.sync(roomDir);
 		od.sync(commFile);
@@ -37,9 +37,8 @@ Table::Table(string key):Player(), step(Step::river),od("poker",key) {
 	player_h = giveHand(2);
 	player_c = giveHand(2);
 	deck_t= giveHand(5);
+
 	}
-
-
 }
 
 

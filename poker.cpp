@@ -28,26 +28,10 @@ int main()
 
 	Card card(Shape::Pike, 33);
 
-	
-	Card::toCards(string("carreau*4|pique*5|pique*3"));
-
-
-
-
-	
-	//table.send(Card::toString(card));
-	//disp(table.read());
-	
-
-	//disp(card.toString(card));
-
-
-	//Card::toCard(Card::toString(card)).display();
-
-
 
 
 	return 0;
+
 	
 }
 
