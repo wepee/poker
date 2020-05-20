@@ -14,22 +14,35 @@ int main()
 {
 	system("mode con LINES=20 COLS=80");
 	string key;
+
 	//disp("Quel est le numero de votre salle ?");
 	//getline(cin, key);
 
 	//Table table(key);
 
-	//table.send("nique ta mere");
 	//
+	//table.send("nique ta mere");
 	//disp(table.read());
+	
 
 
-	Card card(Shape::Pike, 3);
+	Card card(Shape::Pike, 33);
 
-	disp(card.toString(card));
+	
+	Card::toCards(string("|fdp|fdp2|fdp3"));
 
 
-	Card::toCard(Card::toString(card)).display();
+
+
+	
+	//table.send(Card::toString(card));
+	//disp(table.read());
+	
+
+	//disp(card.toString(card));
+
+
+	//Card::toCard(Card::toString(card)).display();
 
 
 

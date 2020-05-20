@@ -46,22 +46,35 @@ Card Card::toCard(string text) {
 	return Card(shape, rank);
 }
 
-
  string Card::toString(Card _card) {
 
 	switch (_card.getShape()) {
-	case 0: return "coeur*" + to_string(_card.getRank());
+	case 0: return "|coeur*" + to_string(_card.getRank());
 		break;
-	case 1: return "trefle*" + to_string(_card.getRank());
+	case 1: return "|trefle*" + to_string(_card.getRank());
 		break;
 	case 2:
-		return string("pique*") + to_string(_card.getRank());
+		return string("|pique*") + to_string(_card.getRank());
 		break;
 	case 3: 
-		return string("carreau*") + to_string(_card.getRank());
+		return string("|carreau*") + to_string(_card.getRank());
 		break;
 	default: return "n'existe pas*" + to_string(_card.getRank());
 		break;
 	}
 
 }
+
+ vector<Card> Card::toCards(string text) {
+
+	 
+	 int nb = count(text.begin(),text.end(),"|");
+	 vector<Card> list;
+
+	 for (int i = 0; i < nb; i++) {
+		 string card = text.substr(text.find_last_of("|"));
+		 text.erase(text.size() - card.size());
+		 list.push_back(Card::toCard(card));
+
+	 }
+ }

@@ -131,7 +131,7 @@ vector<Card> Player::giveHand(int _nb) {
 	try {
 		vector<Card> deck;
 
-		cout << "on veut donner " << _nb << " cartes depuis un paquet en contenant " << cards.size() << endl;
+		//cout << "on veut donner " << _nb << " cartes depuis un paquet en contenant " << cards.size() << endl;
 
 
 		//Le nombre de cartes à piocher ne doit pas exceder celui de la pioche

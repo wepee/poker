@@ -2,6 +2,7 @@
 #include <iostream>
 #include"function.h"
 #include<string>
+#include<vector>
 using namespace std;
 
 enum Shape {
@@ -22,6 +23,7 @@ public:
 	int getRank() { return rank; };			// Accesseur Rang
 	string static toString(Card _card);
 	Card static toCard(string text);
+	vector<Card> static toCards(string text);
 };
 
 	

@@ -32,9 +32,13 @@ Table::Table(string key):Player(), step(Step::river),od("poker",key) {
 		od.sync(commFile);
 	}
 
+
+	if (isHost) {
 	player_h = giveHand(2);
 	player_c = giveHand(2);
 	deck_t= giveHand(5);
+	}
+
 
 }
 
