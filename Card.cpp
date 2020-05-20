@@ -1,4 +1,10 @@
 #include"Card.h"
+#include <sstream> 
+#include <string> 
+#include <iostream> 
+
+using namespace std;
+
 
 Card::Card(Shape shape, int _nb) : shape(shape),rank(_nb){
 	
@@ -65,7 +71,22 @@ Card Card::toCard(string text) {
 
 }
 
- vector<Card> Card::toCards(string text) {
+
+ 
+ vector<Card> Card::taCards(string chaine)
+ {
+	 vector<Card> list;
+	 stringstream ss(chaine);
+	 string sousChaine;
+	 char delim ='|';
+	 while (getline(ss, sousChaine, delim))
+	 {
+		 list.push_back(Card::toCard(sousChaine));
+	 }
+	 return list;
+ }
+
+ /*vector<Card> Card::toCards(string text) {
 
 	 
 	 int nb = count(text.begin(),text.end(),"|");
@@ -77,4 +98,4 @@ Card Card::toCard(string text) {
 		 list.push_back(Card::toCard(card));
 
 	 }
- }
+ }*/
