@@ -24,7 +24,7 @@ public:
 	void deleteCommFile() { delFile(commFile); };
     bool isDir(string dir);
     void waitForChange(string file);
-	string read();
+	string read(bool live = false);
 	void write(string message);
 };
 

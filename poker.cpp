@@ -15,8 +15,8 @@ int main()
 	system("mode con LINES=20 COLS=80");
 	string key;
 
-	//disp("Quel est le numero de votre salle ?");
-	//getline(cin, key);
+	disp("Quel est le numero de votre salle ?");
+	getline(cin, key);
 
 	//Table table(key);
 
@@ -25,10 +25,12 @@ int main()
 	//disp(table.read());
 	
 
-
-	Card card(Shape::Pike, 33);
-
-
+	//Card card(Shape::Pike, 33);
+	Table jeu(key);
+	disp("pute");
+	jeu.lancementMain();
+	disp("lol");
+	
 
 	return 0;
 

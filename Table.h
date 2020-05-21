@@ -20,6 +20,7 @@ private:
 	vector<Card> deck_t;
 	bool isHost = false;
 	ODrive od;
+	string roomDir;
 
 public:
 	Table(string key);
@@ -31,8 +32,8 @@ public:
 	void avancejeu();
 	void lancementMain();
 	void send(string message) { od.write(message); };
-	string read() { return od.read(); };
-	~Table() { if (isHost) od.deleteCommFile(); }; 
+	string read(bool live = false) { return od.read(live); };
+	~Table() {/*if (isHost) od.delFile(od.getFullName(roomDir));*/ send("mabite"); };
 };
 
 

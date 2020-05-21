@@ -187,8 +187,10 @@ void ODrive::waitForChange(string file)
 
 }
 
-string ODrive::read() {
-	waitForChange(commFile);
+string ODrive::read(bool live) {
+    if(!live)
+	    waitForChange(commFile);
+
 	if (ifstream(getFullName(commFile)).good())
 	{
 		ifstream ifile(getFullName(commFile));

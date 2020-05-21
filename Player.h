@@ -25,6 +25,7 @@ public:
 	void shuffle();			// Mélange le paquet
 	void displayCards();			//Affiche le paquet de cartes
 	vector <Card> getCards() { return cards; }; //accesseur
+	void changeCards(vector <Card> cartes) { cards = cartes; }
 	int getCoins() { return coins; }; //accesseur jeton
 	int getScore(Player& secondHand);		//Calcule le score de la meilleure combinaison entre 2 mains
 	vector<Card> giveHand(int _nb); //Donne une main du nombre de carte choisi
