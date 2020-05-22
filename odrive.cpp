@@ -191,13 +191,14 @@ string ODrive::read(bool live) {
     if(!live)
 	    waitForChange(commFile);
 
-	if (ifstream(getFullName(commFile)).good())
-	{
-		ifstream ifile(getFullName(commFile));
-		string text;
-		getline(ifile, text);
-		return text;
-	}
+	//if (ifstream(getFullName(commFile)).good())
+		{
+			ifstream ifile(getFullName(commFile));
+			string text;
+				getline(ifile, text);
+			return text;
+		}
+
 }
 
 
