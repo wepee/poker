@@ -22,6 +22,7 @@ public:
 	Shape getShape() {return shape;};			// Accesseur Forme
 	int getRank() { return rank; };			// Accesseur Rang
 	string static toString(Card _card);
+	string static toString(vector <Card> _cards);
 	Card static toCard(string text);
 	//vector<Card> static toCards(string text);
 	vector<Card> static toCards(string text);

@@ -15,6 +15,7 @@ Classe Table : c'est l'objet qui déroule le jeu
 class Table : Player {
 private:
 	Step step;
+	int subStep = 0;
 	Player player_h;
 	Player player_c;
 	vector<Card> deck_t;
@@ -26,14 +27,21 @@ public:
 	Table(string key);
 	void dispJeu();
 	Step getStep() { return step; };
+	//recuperer l'etape dans comFile
+	int getStep(string txt);
 	Player getPlayerh() { return player_h; };
 	Player getPlayerc() { return player_c; };
 	void displayCards(int nb = 5);
 	void avancejeu();
 	void lancementMain();
-	void send(string message) { od.write(message); };
-	string read(bool live = false) { return od.read(live); };
-	~Table() {/*if (isHost) od.delFile(od.getFullName(roomDir));*/ send("mabite"); };
+	void send(string message);
+	void send(vector<Card> cards);
+	string read(int onlyIf);
+	string read(string onlyIf);
+	void waitAck(int _step);
+	void ack(int _step);
+	string read() { return od.read(true); };
+	~Table() {if (isHost) od.delFile(od.getFullName(roomDir)); };
 };
 
 

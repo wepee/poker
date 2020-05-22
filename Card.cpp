@@ -71,6 +71,17 @@ Card Card::toCard(string text) {
 
 }
 
+ string Card::toString(vector<Card> _cards)
+ {
+	 string cards;
+
+	 for (int i = 0; i < _cards.size(); i++)
+		 cards += Card::toString(_cards[i]);
+
+
+	 return cards;
+ }
+
 
  
  vector<Card> Card::toCards(string chaine)
@@ -79,10 +90,12 @@ Card Card::toCard(string text) {
 	 stringstream ss(chaine);
 	 string sousChaine;
 	 char delim ='|';
+
 	 while (getline(ss, sousChaine, delim))
 	 {
-		 if(sousChaine != "")
-			list.push_back(Card::toCard(sousChaine));
+		 //on retire ce qui n'est pas une carte
+		 if (sousChaine != "" && !(sousChaine.find("*") == std::string::npos))
+			 list.push_back(Card::toCard(sousChaine));
 	 }
 	 return list;
  }

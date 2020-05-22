@@ -13,7 +13,7 @@ Table::Table(string key):Player(), step(Step::river),od("poker",key) {
 	 roomDir = baseDir + '/' + key;
 	string commFile = roomDir + "/commFile.txt";
 
-	cout << "Attente de l'autre joueur" << endl;
+	disp("Attente de l'autre joueur");
 
 	// Initialize the room directory
 	od.refresh(baseDir);
@@ -21,33 +21,75 @@ Table::Table(string key):Player(), step(Step::river),od("poker",key) {
 		od.mkDir(roomDir);
 			od.refresh(baseDir);
 	}
-	// si la salle n'existe pas 
-	if ( read(true)!="host"               /*!od.isDir(roomDir)*/)
+	// Si le fichier ne mentionne pas le passage de l'hote 
+	if ( read()!="0|host" )
 	{
+
 		//cette instance est l'hote
 		isHost = true;
-		send("host");
-		cout<< "host"<<endl;
-		// création
-		//od.mkDir(roomDir);
-		//od.refresh(baseDir);
+		od.write("0|host");
+		disp("Vous etes l'hote");
+
 	}
 	// sinon on sychronise
 	else {
 		od.sync(roomDir);
 		od.sync(commFile);
-		send("client");
+		disp("Vous etes le client");
+		od.write("0|client");
 	}
 
-
+	//Si je suis l'host 
 	if (isHost) {
-	player_h = giveHand(2);
-	player_c = giveHand(2);
-	deck_t= giveHand(5);
+
+		//j'attends le client
+		disp("attente du joueur ");
+		while (read() != "0|client")
+			loading();
+		
+
+		//je distribu et j'envoie
+		player_h.changeCards(giveHand(2));
+		player_c.changeCards(giveHand(2));
+		deck_t= giveHand(5);
+
+		
+		send(deck_t);
+		cout << "etape"<< subStep <<endl;
+		waitAck(0);
+
+		send(player_c.getCards());
+		cout << "etape" << subStep << endl;
+		waitAck(1);
+
+		send(player_h.getCards());
+		cout << "etape" << subStep << endl;
+		waitAck(2);
+
+
 
 	}
-}
 
+	//Si je suis le client
+	else{
+
+		while (od.read(true) == "client")
+			loading();
+
+
+		deck_t = Card::toCards(read(0));
+		ack(0);
+
+		player_h.changeCards(Card::toCards(read(1)));
+		ack(1);
+
+		player_c.changeCards(Card::toCards(read(2)));
+		ack(2);
+
+	}
+
+
+}
 
 void Table::avancejeu() {
 	if (step != Step::river) {
@@ -120,24 +162,24 @@ void Table::lancementMain() {
 		for (int i = 0; i < 2; i++)
 		cartes = cartes + Card::toString(player_h.getCards()[i]);
 		cout << cartes	<< endl;
-		read();
+		//read("");
 		send(cartes);
 		cout << "j'attend" << endl;
-		read();
+		//read();
 		cartes = "";
 		for (int i = 0; i < 2; i++)
 		cartes = cartes + Card::toString(player_c.getCards()[i]);
 		cout << cartes << endl;
 		send(cartes);
 		cout << "j'attend" << endl;
-		read();
+		//read();
 		cartes = "";
 		for (int i = 0; i < 5; i++)
 		cartes = cartes + Card::toString(deck_t[i]);
 		cout << cartes << endl;
 		send(cartes);
 		cout << "j'attend" << endl;
-		read();
+		//read();
 		
 		
 	}
@@ -169,6 +211,17 @@ void Table::lancementMain() {
 
 }
 
+void Table::send(string message)
+{
+	od.write(to_string(subStep)+message);
+}
+
+void Table::send(vector<Card> cards)
+{
+	disp("on envoie : " + to_string(subStep) + Card::toString(cards));
+	send(Card::toString(cards));
+}
+
 void Table::displayCards(int nb) {
 
 	for (int i = 0; i < nb; i++) {
@@ -179,4 +232,42 @@ void Table::displayCards(int nb) {
 		cout << " | ";
 	}
 	cout << endl;
+}
+
+int Table::getStep(string txt) {
+	return stoi(txt.substr(0,txt.find_first_of("|")));
+};
+
+string Table::read(int onlyIf){
+
+	disp("Loading");
+	//tant qu'on est pas à la bonne étape 
+	while (getStep(od.read(true)) != onlyIf)
+		loading();
+
+	return od.read(true);
+}
+
+string Table::read(string onlyIf) {
+	while (od.read(true) != onlyIf)
+	{
+		disp("Loading");
+		loading();
+	}
+	return od.read(true);
+}
+
+void Table::waitAck(int _step)
+{
+	disp("attente de la reponse du client " + to_string(_step));
+	while (od.read(true) != to_string(_step) + "|ok")
+		loading();
+
+	subStep++;
+}
+
+void Table::ack(int _step)
+{
+	od.write(to_string(_step)+"|ok");
+	subStep++;
 }

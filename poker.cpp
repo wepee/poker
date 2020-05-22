@@ -18,19 +18,24 @@ int main()
 	disp("Quel est le numero de votre salle ?");
 	getline(cin, key);
 
-	//Table table(key);
+	Table table(key);
 
 	//
 	//table.send("nique ta mere");
 	//disp(table.read());
-	
+
+	/*vector<Card> maBite = Card::toCards("1|trefle*7|pique*4|pique*2|trefle*9|carreau*3");
+	for (int i = 0; i < maBite.size(); i++)
+		maBite[i].display();*/
+
 
 	//Card card(Shape::Pike, 33);
-	Table jeu(key);
-	disp("pute");
-	jeu.lancementMain();
-	disp("lol");
+	//Table jeu(key);
 	
+	table.dispJeu();
+	
+
+	system("pause");
 
 	return 0;
 

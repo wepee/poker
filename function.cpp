@@ -77,6 +77,24 @@ void disp(string message) {
 
 }
 
+void loading(string car, int time, int size)
+{
+	for (int i = 0; i < size; i++) {
+		Sleep(time);
+		cout << car;
+	}
+	Sleep(time);
+	cout << "\r";
+
+	for (int i = 0; i < size; i++)
+		cout << " ";
+
+	cout << "\r";
+
+}
+
+
+
 Card toString(string text) {
 
 	Shape shape;
