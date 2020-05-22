@@ -13,18 +13,16 @@ Table::Table(string key):Player(), step(Step::river),od("poker",key) {
 	 roomDir = baseDir + '/' + key;
 	string commFile = roomDir + "/commFile.txt";
 
-	disp("Attente de l'autre joueur");
-
+	disp("Demarrage du jeu...");
 	// Initialize the room directory
 	od.refresh(baseDir);
 	if (!od.isDir(roomDir) ){
 		od.mkDir(roomDir);
-			od.refresh(baseDir);
+		od.refresh(baseDir);
 	}
 	// Si le fichier ne mentionne pas le passage de l'hote 
 	if ( read()!="0|host" )
 	{
-
 		//cette instance est l'hote
 		isHost = true;
 		od.write("0|host");
@@ -39,52 +37,53 @@ Table::Table(string key):Player(), step(Step::river),od("poker",key) {
 		od.write("0|client");
 	}
 
+	system("cls");
+	disp("pokertse");
+	lineBreak(3);
+
 	//Si je suis l'host 
 	if (isHost) {
 
 		//j'attends le client
-		disp("attente du joueur ");
+		cout<<"attente du client..."<<endl;
 		while (read() != "0|client")
 			loading();
 		
 
 		//je distribu et j'envoie
-		player_h.changeCards(giveHand(2));
-		player_c.changeCards(giveHand(2));
+		me.changeCards(giveHand(2));
+		opponent.changeCards(giveHand(2));
 		deck_t= giveHand(5);
 
 		
 		send(deck_t);
-		cout << "etape"<< subStep <<endl;
-		waitAck(0);
+		cout << "synchronisation du deck ..."<<endl;
+		waitAck(subStep);
 
-		send(player_c.getCards());
-		cout << "etape" << subStep << endl;
-		waitAck(1);
+		send(opponent.getCards());
+		cout << "synchronisation du paquet client..." << subStep << endl;
+		waitAck(subStep);
 
-		send(player_h.getCards());
-		cout << "etape" << subStep << endl;
-		waitAck(2);
-
-
+		send(me.getCards());
+		cout << "synchronisation du paquet hote..." << subStep << endl;
+		waitAck(subStep);
 
 	}
 
 	//Si je suis le client
 	else{
-
-		while (od.read(true) == "client")
-			loading();
-
-
+		
+		cout << "reception du deck..."<<endl;
 		deck_t = Card::toCards(read(0));
-		ack(0);
+		ack(subStep);
 
-		player_h.changeCards(Card::toCards(read(1)));
-		ack(1);
+		cout << "reception de mon paquet..." << endl;
+		me.changeCards(Card::toCards(read(1)));
+		ack(subStep);
 
-		player_c.changeCards(Card::toCards(read(2)));
-		ack(2);
+		cout << "reception du paquet adverse..." << endl;
+		opponent.changeCards(Card::toCards(read(2)));
+		ack(subStep);
 
 	}
 
@@ -111,8 +110,13 @@ void Table::dispJeu() {
 
 	system("cls");
 
+	// Affichage barre superieure
 	line(WSIZE);
-	cout << "  " << map(getStep()) << "             jeton : " << this->getPlayerc().getCoins() << endl;
+	cout << "  " << map(getStep());
+	line(WSIZE/3.5, " ", false);
+	cout<< "jeton : " << this->getMe().getCoins();
+	line(WSIZE/2.75," ",false);
+	cout << "|  "<<(isHost ? " host" : "client") << endl;
 	line(WSIZE);
 
 	lineBreak(2);
@@ -146,7 +150,7 @@ void Table::dispJeu() {
 
 	cout << endl << " Vous possedez les cartes suivantes : " << endl;
 
-	player_c.displayCards();
+	opponent.displayCards();
 
 	line(WSIZE);
 
@@ -155,12 +159,12 @@ void Table::dispJeu() {
 void Table::lancementMain() {
 	
 	if (isHost) {
-		player_h = giveHand(2);
-		player_c = giveHand(2);
+		me = giveHand(2);
+		opponent = giveHand(2);
 		deck_t = giveHand(5);
 		string cartes; 
 		for (int i = 0; i < 2; i++)
-		cartes = cartes + Card::toString(player_h.getCards()[i]);
+		cartes = cartes + Card::toString(me.getCards()[i]);
 		cout << cartes	<< endl;
 		//read("");
 		send(cartes);
@@ -168,7 +172,7 @@ void Table::lancementMain() {
 		//read();
 		cartes = "";
 		for (int i = 0; i < 2; i++)
-		cartes = cartes + Card::toString(player_c.getCards()[i]);
+		cartes = cartes + Card::toString(opponent.getCards()[i]);
 		cout << cartes << endl;
 		send(cartes);
 		cout << "j'attend" << endl;
@@ -187,19 +191,20 @@ void Table::lancementMain() {
 		cout << "j'attend" << endl;
 		string scartes = od.read(true);
 		cout << scartes << endl ;
-		player_h.changeCards(Card::toCards(scartes));
+		me.changeCards(Card::toCards(scartes));
 		
 		send("recu chef");
 
 		cout << "j'ai reçu j'attend" << endl;
 		scartes = od.read();
 		cout << scartes << endl;
-		player_c.changeCards(Card::toCards(scartes));
+		
+		opponent.changeCards(Card::toCards(scartes));
 		
 		send("recu chef");
 		cout << "j'ai reçu j'attend" << endl;
-	 scartes = od.read();
-	 cout << scartes << endl;
+		scartes = od.read();
+		cout << scartes << endl;
 		deck_t= Card::toCards(scartes);
 		
 		send("recu chef");
@@ -218,7 +223,6 @@ void Table::send(string message)
 
 void Table::send(vector<Card> cards)
 {
-	disp("on envoie : " + to_string(subStep) + Card::toString(cards));
 	send(Card::toString(cards));
 }
 
@@ -240,7 +244,7 @@ int Table::getStep(string txt) {
 
 string Table::read(int onlyIf){
 
-	disp("Loading");
+	//disp("Loading");
 	//tant qu'on est pas à la bonne étape 
 	while (getStep(od.read(true)) != onlyIf)
 		loading();

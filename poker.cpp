@@ -15,6 +15,11 @@ int main()
 	system("mode con LINES=20 COLS=80");
 	string key;
 
+
+	disp("pokertse");
+	lineBreak(3);
+
+
 	disp("Quel est le numero de votre salle ?");
 	getline(cin, key);
 

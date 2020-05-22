@@ -72,13 +72,20 @@ void lineBreak(int nb) {
 }
 
 void disp(string message) {
-
+	
+	if (message == "pokertse") {
+		disp("		 ___  ____ _  _ ____  ____  _____ ____  ____");
+		disp("		| __] |  | |_/  |___  |___/   |   [__	|___");
+		disp("		|     |__| | |_ |___  |  |    |   ___]  |___");
+	}
+	else
 	cout << message << endl;
 
 }
 
 void loading(string car, int time, int size)
 {
+
 	for (int i = 0; i < size; i++) {
 		Sleep(time);
 		cout << car;

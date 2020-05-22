@@ -16,8 +16,8 @@ class Table : Player {
 private:
 	Step step;
 	int subStep = 0;
-	Player player_h;
-	Player player_c;
+	Player me;
+	Player opponent;
 	vector<Card> deck_t;
 	bool isHost = false;
 	ODrive od;
@@ -29,8 +29,8 @@ public:
 	Step getStep() { return step; };
 	//recuperer l'etape dans comFile
 	int getStep(string txt);
-	Player getPlayerh() { return player_h; };
-	Player getPlayerc() { return player_c; };
+	Player getMe() { return me; };
+	Player getOpp() { return opponent; };
 	void displayCards(int nb = 5);
 	void avancejeu();
 	void lancementMain();

@@ -19,4 +19,4 @@ void lineBreak(int nb);
 
 void disp(string message);
 
-void loading(string car = "*",int time = 400, int size = 3);
+void loading(string car = ".",int time = 400, int size = 3);
