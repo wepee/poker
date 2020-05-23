@@ -19,19 +19,28 @@ private:
 
 
 public:
-
-	Player(bool empty = false);//Constructeur par defaut
-	Player(vector<Card> deck);//Constructeur 
-	void shuffle();			// Mélange le paquet
-	void displayCards();			//Affiche le paquet de cartes
-	vector <Card> getCards() { return cards; }; //accesseur
+	// Constructeur par defaut
+	Player(bool empty = false);
+	// Constructeur
+	Player(vector<Card> deck); 
+	// Mélange le paquet
+	void shuffle();			
+	// Affiche le paquet de cartes
+	void displayCards();			
+	// accesseur
+	vector <Card> getCards() { return cards; }; 
+	// Ecrase le paquet du joueur avec le vecteur "cartes"
 	void changeCards(vector <Card> cartes) { cards = cartes; }
-	int getCoins() { return coins; }; //accesseur jeton
-	int getScore(Player& secondHand);		//Calcule le score de la meilleure combinaison entre 2 mains
-	vector<Card> giveHand(int _nb); //Donne une main du nombre de carte choisi
-	void changeHand();			//Lancé à chaque tour : permet de changer le paquet
-	void changeCoins(int);		//Permet d'ajouter ou de retrancher des jetons selon le signe du int
-	int getMise() { return mise; }; //accesseur jeton
+	//accesseur jeton
+	int getCoins() { return coins; }; 
+	// Calcule le score de la meilleure combinaison entre 2 mains
+	int getScore(Player& secondHand);		
+	// Donne une main du nombre de carte choisi
+	vector<Card> giveHand(int _nb); 		
+	// Permet d'ajouter ou de retrancher des jetons selon le signe du int
+	void changeCoins(int _coins) { coins += coins; };
+	// accesseur jeton
+	int getMise() { return mise; }; 
 
 };
 

@@ -1,12 +1,3 @@
-#include <string>
-#include <sstream>
-#include <iostream>
-#include <fstream>
-#include <cstdlib>
-#include "sys/stat.h"
-#include <ctime>
-#include <thread>
-#include <chrono>
 #include "odrive.h"
 
 #if defined(_WIN32) || defined(WIN32)
@@ -192,12 +183,12 @@ string ODrive::read(bool live) {
 	    waitForChange(commFile);
 
 	//if (ifstream(getFullName(commFile)).good())
-	{
+	//{
 		ifstream ifile(getFullName(commFile));
 		string text;
 		getline(ifile, text);
 		return text;
-	}
+
 }
 
 

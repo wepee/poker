@@ -1,6 +1,14 @@
 #ifndef ODRIVE_H
 #define ODRIVE_H
 #include <string>
+#include <sstream>
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
+#include "sys/stat.h"
+#include <ctime>
+#include <thread>
+#include <chrono>
 
 using namespace std;
 
@@ -24,7 +32,9 @@ public:
 	void deleteCommFile() { delFile(commFile); };
     bool isDir(string dir);
     void waitForChange(string file);
+	//Lis en direct si live = true
 	string read(bool live = false);
+	//Ecrire dans le commFile
 	void write(string message);
 };
 
