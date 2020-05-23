@@ -2,6 +2,7 @@
 #include"function.h"
 
 string map(enum Shape _shape) {
+
 	switch (_shape) {
 	case 0: return "coeur";
 		break;
@@ -18,7 +19,6 @@ string map(enum Shape _shape) {
 }
 
 string map(int _rank) {
-
 
 	switch (_rank) {
 	case 14:
@@ -37,8 +37,8 @@ string map(int _rank) {
 	}
 
 }
-string map(enum Step _step) {
 
+string map(enum Step _step) {
 
 	switch (_step) {
 	case 0:
@@ -59,6 +59,7 @@ string map(enum Step _step) {
 }
 
 void line(int size, const char* car, bool lineBreak) {
+
 	for (int i = 0; i < size; i++)
 		cout << car;
 
@@ -67,6 +68,7 @@ void line(int size, const char* car, bool lineBreak) {
 };
 
 void lineBreak(int nb) {
+
 	for (int i = 0; i < nb; i++)
 		cout << endl ;
 }
@@ -80,7 +82,6 @@ void disp(string message) {
 	}
 	else
 	cout << message << endl;
-
 }
 
 void loading(string car, int time, int size)
@@ -99,8 +100,6 @@ void loading(string car, int time, int size)
 	cout << "\r";
 
 }
-
-
 
 Card toString(string text) {
 

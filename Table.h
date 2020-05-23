@@ -21,34 +21,47 @@ private:
 	vector<Card> deck_t;
 	bool isHost = false;
 	ODrive od;
-	string roomDir;
+	//pour pouvoir le fermer à la fin
+	string commFile;
 
 public:
+	//Constructeur d'une table d'Id key
 	Table(string key);
+	//Afficher le jeu
 	void dispJeu();
+	//recuperer l'étape de la Table
 	Step getStep() { return step; };
-	//recuperer l'etape dans comFile
+	// Recuperer l'etape d'une trame commFile
 	int getStep(string txt);
+	// Recuperer le joueur
 	Player getMe() { return me; };
+	// Recuperer l'adversaire
 	Player getOpp() { return opponent; };
+	// Afficher nb carte(s) de la table
 	void displayCards(int nb = 5);
 	void avancejeu();
 	void lancementMain();
-	void send(string message);
-	void send(vector<Card> cards);
+	//Permet d'envoyer une trame avec subStep
+	void send(string message) { od.write(to_string(subStep) + message); };
+	//Permet d'envoyer des cartes avec substep 
+	void send(vector<Card> cards) { send(Card::toString(cards)); };
+	//Lire la trame lorsque subStep = onlyif
 	string read(int onlyIf);
-	string read(string onlyIf);
+	//Attendre l'accusé de reception _step
 	void waitAck(int _step);
+	//Envoyer un accusé de reception
 	void ack(int _step);
+	//Lire en direct 
 	string read() { return od.read(true); };
-	~Table() {if (isHost) od.delFile(od.getFullName(roomDir)); };
+	//Destructeur : supprimer le ficher de communication
+	~Table() {if (isHost) od.delFile(od.getFullName(commFile)); };
 };
 
 
 
 	enum Step 
 	{
-		pre_flop, flop, turn,river
+		pre_flop, flop, turn, river
 	}; 
 
 

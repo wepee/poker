@@ -1,8 +1,7 @@
 #include"Table.h"
 #include<Windows.h>
 
-//detrminer si host ou non
-// chaine de caractere connu pour savoir s'il y a que le host de co, suppr par l'autre
+
 Table::Table(string key):Player(), step(Step::river),od("poker",key) {
 	
 	// repertoire mere
@@ -10,13 +9,13 @@ Table::Table(string key):Player(), step(Step::river),od("poker",key) {
 
 
 	// mise en place de l'arborencence des fichiers de communication
-	 roomDir = baseDir + '/' + key;
-	string commFile = roomDir + "/commFile.txt";
+	string roomDir = baseDir + '/' + key;
+	commFile = roomDir + "/commFile.txt";
 
 	disp("Demarrage du jeu...");
 	// Initialize the room directory
 	od.refresh(baseDir);
-	if (!od.isDir(roomDir) ){
+	if (!od.isDir(roomDir)){
 		od.mkDir(roomDir);
 		od.refresh(baseDir);
 	}
@@ -55,7 +54,6 @@ Table::Table(string key):Player(), step(Step::river),od("poker",key) {
 		opponent.changeCards(giveHand(2));
 		deck_t= giveHand(5);
 
-		
 		send(deck_t);
 		cout << "synchronisation du deck ..."<<endl;
 		waitAck(subStep);
@@ -74,19 +72,18 @@ Table::Table(string key):Player(), step(Step::river),od("poker",key) {
 	else{
 		
 		cout << "reception du deck..."<<endl;
-		deck_t = Card::toCards(read(0));
+		deck_t = Card::toCards(read(subStep));
 		ack(subStep);
 
 		cout << "reception de mon paquet..." << endl;
-		me.changeCards(Card::toCards(read(1)));
+		me.changeCards(Card::toCards(read(subStep)));
 		ack(subStep);
 
 		cout << "reception du paquet adverse..." << endl;
-		opponent.changeCards(Card::toCards(read(2)));
+		opponent.changeCards(Card::toCards(read(subStep)));
 		ack(subStep);
 
 	}
-
 
 }
 
@@ -216,16 +213,6 @@ void Table::lancementMain() {
 
 }
 
-void Table::send(string message)
-{
-	od.write(to_string(subStep)+message);
-}
-
-void Table::send(vector<Card> cards)
-{
-	send(Card::toString(cards));
-}
-
 void Table::displayCards(int nb) {
 
 	for (int i = 0; i < nb; i++) {
@@ -244,20 +231,9 @@ int Table::getStep(string txt) {
 
 string Table::read(int onlyIf){
 
-	//disp("Loading");
-	//tant qu'on est pas à la bonne étape 
 	while (getStep(od.read(true)) != onlyIf)
 		loading();
 
-	return od.read(true);
-}
-
-string Table::read(string onlyIf) {
-	while (od.read(true) != onlyIf)
-	{
-		disp("Loading");
-		loading();
-	}
 	return od.read(true);
 }
 

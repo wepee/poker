@@ -82,8 +82,6 @@ Card Card::toCard(string text) {
 	 return cards;
  }
 
-
- 
  vector<Card> Card::toCards(string chaine)
  {
 	 vector<Card> list;
@@ -99,17 +97,3 @@ Card Card::toCard(string text) {
 	 }
 	 return list;
  }
-
- /*vector<Card> Card::toCards(string text) {
-
-	 
-	 int nb = count(text.begin(),text.end(),"|");
-	 vector<Card> list;
-
-	 for (int i = 0; i < nb; i++) {
-		 string card = text.substr(text.find_last_of("|"));
-		 text.erase(text.size() - card.size());
-		 list.push_back(Card::toCard(card));
-
-	 }
- }*/

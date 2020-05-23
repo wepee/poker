@@ -1,8 +1,7 @@
 #include"Player.h"
-//
 
-Player::Player(bool empty) : coins(0) {
 
+Player::Player(bool empty) : coins(0), mise(0) {
 
 	if (!empty) {
 		int k = 0;
@@ -16,31 +15,26 @@ Player::Player(bool empty) : coins(0) {
 				cards.push_back(Card(i, j));
 			}
 
-
 	}
-
-
 }
 
 
-Player::Player(vector<Card> deck) : cards(deck), coins(0) {
+Player::Player(vector<Card> deck) : cards(deck), coins(0), mise(0) {
 }
 
+// sorte de surcharge de < sur card
+bool sortByRank(Card& a, Card& b) {
+	return (a.getRank() < b.getRank());
+}
 
 void Player::shuffle() {
 
-	// Melanger le paquet
 	for (int i = 0; i < cards.size();i++) {
 		int j = rand() % 52;
 		Card temp = cards[i];
 		cards[i] = cards[j];
 		cards[j] = temp;
 	}
-}
-
-// sorte de surcharge de < sur card
-bool sortByRank(Card& a, Card& b) {
-	return (a.getRank() < b.getRank());
 }
 
 
@@ -125,7 +119,6 @@ int Player::getScore(Player& secondHand) {
 	return score;
 }
 
-
 vector<Card> Player::giveHand(int _nb) {
 
 	try {
@@ -161,8 +154,6 @@ vector<Card> Player::giveHand(int _nb) {
 
 }
 
-
-
 void Player::displayCards() {
 
 	line(WSIZE/4, " ", false);
@@ -176,18 +167,4 @@ void Player::displayCards() {
 		cout << " | ";
 }
 	cout << endl;
-}
-
-
-
-
-
-void Player::changeHand() {
-
-}
-
-void Player::changeCoins(int coins) {
-
-
-
 }
