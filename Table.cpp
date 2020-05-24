@@ -1,8 +1,8 @@
 #include"Table.h"
-#include<Windows.h>
 
 
-Table::Table(string key):Player(), step(Step::river),od("poker",key) {
+
+Table::Table(string key):Player(), step(Step::pre_flop),od("poker",key) {
 	
 	// repertoire mere
 	string baseDir = "poker";
@@ -87,21 +87,82 @@ Table::Table(string key):Player(), step(Step::river),od("poker",key) {
 
 }
 
-void Table::avancejeu() {
-	if (step != Step::river) {
-		//step +1
-		//int a = step;
-		//step = a + 1;
-	}
-	else {
-		//finition du tour 
-		//annoncer le winer 
-		//donner les coins au bon joueur 
+void Table::action() {
+		
+		dispJeu();
+
+		int choice, mise;
+
+		disp("Que voulez-vous faire ?");
+
+		disp("1 - miser");
+		disp("2 - relancer");
+		disp("3 - suivre");
+		disp("4 - se coucher");
+
+		cout <<"> ";
+
+		cin>>choice;
+
+		switch (choice) {
+		case 1 :
+			//Si client, on recupere les données avant
+			if (!isHost) {
+				mise = stoi(read(subStep));
+				ack(subStep);
+				opponent.changeCoins(-mise);
+				changeCoins(mise);
+
+				cout << "L'autre joueur a misé " << mise;
+			
+			
+			}
+			
+			//on mise
+			dispJeu();
+			disp("Combien voulez-vous miser ?");
+			cin >> mise;
+			me.changeCoins(-mise);
+			changeCoins(mise);
+			dispJeu();
+			send(to_string(mise));
+			waitAck(subStep);
+
+			//Si host on recupere la mise client
+			if (isHost) 
+			{
+				mise = stoi(read(subStep));
+				ack(subStep);
+				opponent.changeCoins(-mise);
+				changeCoins(mise);
+			}
+			
+			step = Step::flop;
+
+			break;
+		case 2 : 
+
+
+			break;
+		case 3 :
+
+			break;
+		case 4 :
+
+			break;
+		default :
+			disp("votre commande n'est pas reconnue, veuillez recommencer");
+			Sleep(2000);
+			dispJeu();
+			action();
+			break;
+
+		}
+
+
 
 
 	}
-
-}
 
 void Table::dispJeu() {
 
@@ -112,7 +173,7 @@ void Table::dispJeu() {
 	cout << "  " << map(getStep());
 	line(WSIZE/3.5, " ", false);
 	cout<< "jeton : " << this->getMe().getCoins();
-	line(WSIZE/2.75," ",false);
+	line(WSIZE/3," ",false);
 	cout << "|  "<<(isHost ? " host" : "client") << endl;
 	line(WSIZE);
 
@@ -142,7 +203,11 @@ void Table::dispJeu() {
 	}
 
 	lineBreak(1);
-	line(80, "*");
+	
+	line(WSIZE / 3.5, " ", false);
+	cout<< "| Jetons sur la table : " << coins << " |"<<endl;
+
+	line(80);
 
 
 	cout << endl << " Vous possedez les cartes suivantes : " << endl;
@@ -150,66 +215,6 @@ void Table::dispJeu() {
 	opponent.displayCards();
 
 	line(WSIZE);
-
-}
-
-void Table::lancementMain() {
-	
-	if (isHost) {
-		me = giveHand(2);
-		opponent = giveHand(2);
-		deck_t = giveHand(5);
-		string cartes; 
-		for (int i = 0; i < 2; i++)
-		cartes = cartes + Card::toString(me.getCards()[i]);
-		cout << cartes	<< endl;
-		//read("");
-		send(cartes);
-		cout << "j'attend" << endl;
-		//read();
-		cartes = "";
-		for (int i = 0; i < 2; i++)
-		cartes = cartes + Card::toString(opponent.getCards()[i]);
-		cout << cartes << endl;
-		send(cartes);
-		cout << "j'attend" << endl;
-		//read();
-		cartes = "";
-		for (int i = 0; i < 5; i++)
-		cartes = cartes + Card::toString(deck_t[i]);
-		cout << cartes << endl;
-		send(cartes);
-		cout << "j'attend" << endl;
-		//read();
-		
-		
-	}
-	else {
-		cout << "j'attend" << endl;
-		string scartes = od.read(true);
-		cout << scartes << endl ;
-		me.changeCards(Card::toCards(scartes));
-		
-		send("recu chef");
-
-		cout << "j'ai reçu j'attend" << endl;
-		scartes = od.read();
-		cout << scartes << endl;
-		
-		opponent.changeCards(Card::toCards(scartes));
-		
-		send("recu chef");
-		cout << "j'ai reçu j'attend" << endl;
-		scartes = od.read();
-		cout << scartes << endl;
-		deck_t= Card::toCards(scartes);
-		
-		send("recu chef");
-		cout << "j'ai reçu" << endl;
-	}
-	step = Step::pre_flop;
-	dispJeu();
-	// lancer choix 
 
 }
 

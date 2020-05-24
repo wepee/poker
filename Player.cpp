@@ -1,7 +1,7 @@
 #include"Player.h"
 
 
-Player::Player(bool empty) : coins(0), mise(0) {
+Player::Player(bool empty) : coins(1000), mise(0) {
 
 	if (!empty) {
 		int k = 0;
@@ -19,7 +19,7 @@ Player::Player(bool empty) : coins(0), mise(0) {
 }
 
 
-Player::Player(vector<Card> deck) : cards(deck), coins(0), mise(0) {
+Player::Player(vector<Card> deck) : cards(deck), coins(1000), mise(0) {
 }
 
 // sorte de surcharge de < sur card
