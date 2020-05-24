@@ -12,20 +12,23 @@ const int WSIZE = 80;
 
 int main()
 {
-	system("mode con LINES=20 COLS=80");
-	string key;
+	//taille de la fenetre
+	system("mode con LINES=21 COLS=80");
 
-
+	//Affichage de la bannière
 	disp("pokertse");
 	lineBreak(3);
 
-
+	//On demande l
+	string key;
 	disp("Quel est le numero de votre salle ?");
 	getline(cin, key);
 
+
 	Table table(key);
 
-	//
+	
+
 	//table.send("nique ta mere");
 	//disp(table.read());
 
@@ -38,12 +41,12 @@ int main()
 	//Table jeu(key);
 	
 	table.dispJeu();
-	
+
+	table.action();
 
 	system("pause");
 
 	return 0;
-
 	
 }
 
