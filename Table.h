@@ -39,6 +39,7 @@ public:
 	// Recuperer l'etape d'une trame commFile
 	int getStep(string txt);
 
+	
 	// Recuperer le joueur
 	Player getMe() { return me; };
 

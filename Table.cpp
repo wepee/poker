@@ -94,80 +94,85 @@ void Table::action() {
 		dispJeu();
 
 		int choice, mise;
-
-		disp("Que voulez-vous faire ?");
-
-		disp("1 - miser");
-		disp("2 - relancer");
-		disp("3 - suivre");
-		disp("4 - se coucher");
-
-		cout <<"> ";
-
-		cin>>choice;
-
-		switch (choice) {
-		case 1 :
-			//Si client, on recupere les données avant
+		bool fin_tour = false;
+		while (fin_tour) {
 			if (!isHost) {
-				mise = stoi(read(subStep));
+				string smise = read(subStep);
 				ack(subStep);
-				opponent.changeCoins(-mise);
-				changeCoins(mise);
+				if (smise == "fold") {
+					disp("votre adversaire s'est couché ");
+					cout << "vous remportez " << coins << " jetons " << endl;
+					disp("Nouvelle main ... ");
+					fin_tour = true;
+				}
+				else
+				{
+					mise = stoi(smise);
 
-				cout << "L'autre joueur a misé " << mise;
-			
-			
+					opponent.changeCoins(-mise);
+					changeCoins(mise);
+					cout << "L'autre joueur a misé " << mise;
+
+
+
+
+					disp("Que voulez-vous faire ?");
+
+
+					disp("1 - relancer");
+					disp("2 - suivre");
+					disp("3 - se coucher");
+
+					cout << "> ";
+
+					cin >> choice;
+
+					switch (choice) {
+					case 1:
+						//Si client, on recupere les données avant
+						//on mise
+						dispJeu();
+						disp("Combien voulez-vous miser ?");
+						cin >> mise;
+						me.changeCoins(-mise);
+						changeCoins(mise);
+						me.changeMise( me.getMise() + mise);
+						dispJeu();
+						send(to_string(mise));
+						waitAck(subStep);
+						dispJeu();
+
+						break;
+					case 2:
+						mise = ((me.getMise() * 2) - coins);
+						me.changeCoins(-mise);
+						changeCoins(mise);
+						me.changeMise(me.getMise() + mise);
+						dispJeu();
+						send(to_string(mise));
+						waitAck(subStep);
+						dispJeu();
+						if(mise> 0)
+						fin_tour;
+						break;
+					case 3:
+						cout << " vous vous etes couché " << endl;
+						send("fold");
+						waitAck(subStep);
+						fin_tour = true;
+						break;
+					default:
+						disp("votre commande n'est pas reconnue, veuillez recommencer");
+						Sleep(2000);
+						dispJeu();
+						action();
+						break;
+
+					}
+
+				}
 			}
-			
-			//on mise
-			dispJeu();
-			disp("Combien voulez-vous miser ?");
-			cin >> mise;
-			me.changeCoins(-mise);
-			changeCoins(mise);
-			dispJeu();
-			send(to_string(mise));
-			waitAck(subStep);
-
-			//Si host on recupere la mise client
-			if (isHost) 
-			{
-				mise = stoi(read(subStep));
-				ack(subStep);
-				opponent.changeCoins(-mise);
-				changeCoins(mise);
-
-
-			}
-			
-			step = Step::flop;
-
-			dispJeu();
-
-			break;
-		case 2 : 
-
-
-			break;
-		case 3 :
-
-			break;
-		case 4 :
-
-			break;
-		default :
-			disp("votre commande n'est pas reconnue, veuillez recommencer");
-			Sleep(2000);
-			dispJeu();
-			action();
-			break;
-
 		}
-
-
-
-
 	}
 
 void Table::dispJeu() {

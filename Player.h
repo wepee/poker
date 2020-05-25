@@ -35,6 +35,8 @@ public:
 	int getCoins() { return coins; }; 
 	// Calcule le score de la meilleure combinaison entre 2 mains
 	int getScore(Player& secondHand);		
+	//Changement mise
+	void changeMise(int new_mise) { mise=new_mise; };
 	// Donne une main du nombre de carte choisi
 	vector<Card> giveHand(int _nb); 		
 	// Permet d'ajouter ou de retrancher des jetons selon le signe du int
