@@ -42,7 +42,7 @@ int main()
 	
 	table.dispJeu();
 
-	table.action();
+	table.deroulemain();
 
 	system("pause");
 

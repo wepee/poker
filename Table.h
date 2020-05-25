@@ -52,7 +52,7 @@ public:
 	void displayCards(int nb = 5);
 
 	//Presente une liste d'action à l'utilisateur
-	void action();
+	bool action();
 
 	//Permet d'envoyer une trame avec subStep
 	void send(string message) { od.write(to_string(subStep) + "|" + message); };
@@ -71,6 +71,9 @@ public:
 
 	//Envoyer un accusé de reception
 	void ack(int _step);
+	
+	//déroule le game
+	void deroulemain();
 
 	//Destructeur : supprimer le ficher de communication
 	~Table() {if (isHost) od.delFile(od.getFullName(od.getCommFile())); };

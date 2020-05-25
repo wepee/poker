@@ -1,8 +1,10 @@
 #include"Table.h"
+#include <sstream> 
+#include <string> 
+#include <iostream> 
 
 
-
-Table::Table(string key):Player(), step(Step::river),od("poker",key) {
+Table::Table(string key):Player(), step(Step::pre_flop),od("poker",key) {
 	
 	//remettre coins à 0 car un player est initialisé à 1000 coins
 	coins = 0;
@@ -89,91 +91,122 @@ Table::Table(string key):Player(), step(Step::river),od("poker",key) {
 
 }
 
-void Table::action() {
-		
+bool Table::action() {
+	bool retour = false;
 		dispJeu();
-
+		bool atoidejouer = true;
+		if (!isHost) {
+			atoidejouer = false;
+		}
 		int choice, mise;
 		bool fin_tour = false;
-		while (fin_tour) {
-			if (!isHost) {
+		while (!fin_tour) {
+			if (!atoidejouer) {
 				string smise = read(subStep);
 				ack(subStep);
 				if (smise == "fold") {
 					disp("votre adversaire s'est couché ");
 					cout << "vous remportez " << coins << " jetons " << endl;
-					disp("Nouvelle main ... ");
+					disp("Bonne journée ... ");
 					fin_tour = true;
+					retour = true;
 				}
-				else
-				{
+				else {
+					
+
 					mise = stoi(smise);
 
 					opponent.changeCoins(-mise);
 					changeCoins(mise);
-					cout << "L'autre joueur a misé " << mise;
+					dispJeu();
+					cout << "L'autre joueur a misé " << mise << " mise fichier : " << smise << endl;
 
-
-
-
-					disp("Que voulez-vous faire ?");
-
-
-					disp("1 - relancer");
-					disp("2 - suivre");
-					disp("3 - se coucher");
-
-					cout << "> ";
-
-					cin >> choice;
-
-					switch (choice) {
-					case 1:
-						//Si client, on recupere les données avant
-						//on mise
-						dispJeu();
-						disp("Combien voulez-vous miser ?");
-						cin >> mise;
-						me.changeCoins(-mise);
-						changeCoins(mise);
-						me.changeMise( me.getMise() + mise);
-						dispJeu();
-						send(to_string(mise));
-						waitAck(subStep);
-						dispJeu();
-
-						break;
-					case 2:
-						mise = ((me.getMise() * 2) - coins);
-						me.changeCoins(-mise);
-						changeCoins(mise);
-						me.changeMise(me.getMise() + mise);
-						dispJeu();
-						send(to_string(mise));
-						waitAck(subStep);
-						dispJeu();
-						if(mise> 0)
-						fin_tour;
-						break;
-					case 3:
-						cout << " vous vous etes couché " << endl;
-						send("fold");
-						waitAck(subStep);
-						fin_tour = true;
-						break;
-					default:
-						disp("votre commande n'est pas reconnue, veuillez recommencer");
-						Sleep(2000);
-						dispJeu();
-						action();
-						break;
-
-					}
 
 				}
 			}
+					if (fin_tour == false) {
+						disp("Que voulez-vous faire ?");
+
+
+						disp("1 - relancer/miser");
+						disp("2 - suivre");
+						disp("3 - se coucher");
+
+						cout << "> ";
+
+						cin >> choice;
+
+						switch (choice) {
+						case 1:
+							//Si client, on recupere les données avant
+							//on mise
+							dispJeu();
+							disp("Combien voulez-vous miser ?");
+							cin >> mise;
+							me.changeCoins(-mise);
+							changeCoins(mise);
+							me.changeMise(mise);
+							dispJeu();
+							send(to_string(mise));
+							waitAck(subStep);
+							dispJeu();
+							atoidejouer = false;
+
+							break;
+						case 2:
+							mise = -((me.getMise() * 2) - coins);
+							me.changeCoins(-mise);
+							changeCoins(mise);
+							me.changeMise(mise);
+							dispJeu();
+							send(to_string(mise));
+							waitAck(subStep);
+							dispJeu();
+							if (mise > 0)
+								fin_tour=true;
+							atoidejouer = false;
+							break;
+						case 3:
+							cout << " vous vous etes couché " << endl;
+							send("fold");
+							waitAck(subStep);
+							fin_tour = true;
+							atoidejouer = false;
+							break;
+						default:
+							disp("votre commande n'est pas reconnue, veuillez recommencer");
+							Sleep(2000);
+							dispJeu();
+							action();
+							break;
+
+						}
+					}
+				
+			
 		}
+			if(step!=Step::river){
+			nextStep();
+			}
+			else{
+			retour = true;
+			}
+			return retour;
 	}
+
+
+	void Table::deroulemain() {
+		while (1) {
+			if(action())
+			break;
+		}
+
+
+	}
+
+
+	
+
 
 void Table::dispJeu() {
 
@@ -183,7 +216,7 @@ void Table::dispJeu() {
 	line(WSIZE);
 	cout << "  " << map(step);
 	line(WSIZE/3.5, " ", false);
-	cout<< "jeton : " << this->getMe().getCoins();
+	cout<< "jeton : " << this->getMe().getCoins() << "  mise :" << getMe().getMise();
 	line(WSIZE/3," ",false);
 	cout << "|  "<<(isHost ? " host" : "client") << endl;
 	line(WSIZE);
@@ -249,8 +282,26 @@ string Table::read(int onlyIf){
 
 	while (getStep(od.read(true)) != onlyIf)
 		loading();
+	string info = od.read(true);
+	string infof;
+	stringstream ss(info);
+	string sousChaine;
+	int i = 0;
+	char delim = '|';
+	while (getline(ss, sousChaine, delim))
+	{
+		if (i >1) {
+			infof = infof+ "|"+sousChaine;
+		}
+		else {
+			if (i == 1) {
 
-	return od.read(true);
+				infof = sousChaine;
+			}
+		}
+			i++;
+	}
+	return infof;
 }
 
 void Table::waitAck(int _step)
