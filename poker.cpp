@@ -21,7 +21,7 @@ int main()
 
 	//On demande l
 	string key;
-	disp("Quel est le numero de votre salle ?");
+	disp("Quel est le nom de votre salle ?");
 	getline(cin, key);
 
 

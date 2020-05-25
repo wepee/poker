@@ -2,15 +2,17 @@
 
 
 
-Table::Table(string key):Player(), step(Step::pre_flop),od("poker",key) {
+Table::Table(string key):Player(), step(Step::river),od("poker",key) {
 	
+	//remettre coins à 0 car un player est initialisé à 1000 coins
+	coins = 0;
+
 	// repertoire mere
 	string baseDir = "poker";
 
-
 	// mise en place de l'arborencence des fichiers de communication
 	string roomDir = baseDir + '/' + key;
-	commFile = roomDir + "/commFile.txt";
+	string commFile = roomDir + "/commFile.txt";
 
 	disp("Demarrage du jeu...");
 	// Initialize the room directory
@@ -52,9 +54,9 @@ Table::Table(string key):Player(), step(Step::pre_flop),od("poker",key) {
 		//je distribu et j'envoie
 		me.changeCards(giveHand(2));
 		opponent.changeCards(giveHand(2));
-		deck_t= giveHand(5);
+		deck = giveHand(5);
 
-		send(deck_t);
+		send(deck);
 		cout << "synchronisation du deck ..."<<endl;
 		waitAck(subStep);
 
@@ -72,7 +74,7 @@ Table::Table(string key):Player(), step(Step::pre_flop),od("poker",key) {
 	else{
 		
 		cout << "reception du deck..."<<endl;
-		deck_t = Card::toCards(read(subStep));
+		deck = Card::toCards(read(subStep));
 		ack(subStep);
 
 		cout << "reception de mon paquet..." << endl;
@@ -135,9 +137,13 @@ void Table::action() {
 				ack(subStep);
 				opponent.changeCoins(-mise);
 				changeCoins(mise);
+
+
 			}
 			
 			step = Step::flop;
+
+			dispJeu();
 
 			break;
 		case 2 : 
@@ -170,7 +176,7 @@ void Table::dispJeu() {
 
 	// Affichage barre superieure
 	line(WSIZE);
-	cout << "  " << map(getStep());
+	cout << "  " << map(step);
 	line(WSIZE/3.5, " ", false);
 	cout<< "jeton : " << this->getMe().getCoins();
 	line(WSIZE/3," ",false);
@@ -181,7 +187,7 @@ void Table::dispJeu() {
 	disp("La table possede les cartes suivantes :");
 	lineBreak(1);
 
-	switch (this->step) {
+	switch (step) {
 	case 0:
 		line(15, " ", false);
 		displayCards(0);
@@ -224,7 +230,7 @@ void Table::displayCards(int nb) {
 		if (i == 0)
 			cout << " | ";
 
-		deck_t[i].display();
+		deck[i].display();
 		cout << " | ";
 	}
 	cout << endl;

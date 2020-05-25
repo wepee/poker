@@ -32,6 +32,8 @@ public:
 	void deleteCommFile() { delFile(commFile); };
     bool isDir(string dir);
     void waitForChange(string file);
+	//recuper le ficher de communication pour le fermer
+	string getCommFile() { return commFile; };
 	//Lis en direct si live = true
 	string read(bool live = false);
 	//Ecrire dans le commFile
