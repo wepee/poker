@@ -35,6 +35,8 @@ public:
 	//Afficher le jeu
 	void dispJeu();
 
+	//Aller à l'étape suivante
+	void nextStep() { step = static_cast<Step>(step + 1); };
 
 	// Recuperer l'etape d'une trame commFile
 	int getStep(string txt);
