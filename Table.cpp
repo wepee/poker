@@ -112,14 +112,21 @@ bool Table::action() {
 					retour = true;
 				}
 				else {
-					
-
 					mise = stoi(smise);
-
-					opponent.changeCoins(-mise);
+						opponent.changeCoins(-mise);
+					opponent.changeMise(mise);
 					changeCoins(mise);
 					dispJeu();
 					cout << "L'autre joueur a misé " << mise << " mise fichier : " << smise << endl;
+					
+					
+					if (mise == (opponent.getMise() - coins)) {
+						fin_tour == true;
+					}
+
+					
+
+
 
 
 				}
@@ -162,8 +169,9 @@ bool Table::action() {
 							send(to_string(mise));
 							waitAck(subStep);
 							dispJeu();
-							if (mise > 0)
-								fin_tour=true;
+				
+								fin_tour = true;
+							
 							atoidejouer = false;
 							break;
 						case 3:
