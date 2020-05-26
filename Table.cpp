@@ -93,14 +93,18 @@ Table::Table(string key):Player(), step(Step::pre_flop),od("poker",key) {
 
 bool Table::action() {
 	bool retour = false;
+	bool mfold = false;
+	bool ofold = false;
 		dispJeu();
 		bool atoidejouer = true;
 		if (!isHost) {
 			atoidejouer = false;
 		}
-		int choice, mise;
+		int choice, mise,regledemerde;
 		bool fin_tour = false;
+		regledemerde = 0;
 		while (!fin_tour) {
+			
 			if (!atoidejouer) {
 				string smise = read(subStep);
 				ack(subStep);
@@ -111,20 +115,21 @@ bool Table::action() {
 					fin_tour = true;
 					retour = true;
 					atoidejouer = true;
+					ofold = true;
 				}
 				else {
 					mise = stoi(smise);
 						opponent.changeCoins(-mise);
 					opponent.changeMise(mise);
 					changeCoins(mise);
+					regledemerde = 1;
 					dispJeu();
 					cout << "L'autre joueur a misé " << mise << " mise fichier : " << smise << endl;
 					
 					
-					if (mise == (opponent.getMise() - coins)) {
-						fin_tour == true;
+					if (me.getMise() == opponent.getMise() && regledemerde ==1) {
+						fin_tour = true;
 					}
-
 					
 				}
 			}
@@ -155,7 +160,7 @@ bool Table::action() {
 							waitAck(subStep);
 							dispJeu();
 							atoidejouer = false;
-
+							regledemerde = 1;
 							break;
 						case 2:
 							mise = -((me.getMise() * 2) - coins);
@@ -166,9 +171,9 @@ bool Table::action() {
 							send(to_string(mise));
 							waitAck(subStep);
 							dispJeu();
-				
-							fin_tour = true;
-							
+							if (regledemerde == 1)
+								fin_tour = true;
+							regledemerde = 1;
 							atoidejouer = false;
 							break;
 						case 3:
@@ -177,6 +182,7 @@ bool Table::action() {
 							waitAck(subStep);
 							fin_tour = true;
 							atoidejouer = false;
+							mfold = true;
 							break;
 						default:
 							disp("votre commande n'est pas reconnue, veuillez recommencer");
@@ -190,24 +196,53 @@ bool Table::action() {
 				
 			
 		}
-			if(step != Step::river){
+			if(step != Step::river && !mfold && !ofold){
 			nextStep();
 			dispJeu();
 			}
 			else{
-			retour = true;
+				retour = true;
+				if (mfold) {
+				me.changeCoins(coins);
+				changeCoins(-coins);
+				}
+					else {
+					if (ofold) {
+						opponent.changeCoins(coins);
+						changeCoins(-coins);
+					}
+				}
 			}
 			return retour;
 	}
 
 
 	void Table::deroulemain() {
-		while (1) {
+		
+		while(me.getCoins()>0 && opponent.getCoins> 0){
+		//relancer tant que personne a 0 thunes
+			while (1) {
 			if(action())
 			break;
 		}
+		//getscore
+		//affiche winner
+		if (me.getScore(me.getCards) > opponent.getScore(opponent.getCards)) {
+			me.changeCoins(coins);
+			changeCoins(-coins);
+		}
+		else {
+			if (me.getScore(me.getCards) < opponent.getScore(opponent.getCards)) {
+				opponent.changeCoins(coins);
+				changeCoins(-coins);
+			}
+		}
+		//distribue pot au winner
+		
+		
+		
 
-
+		}
 	}
 
 
