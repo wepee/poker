@@ -13,7 +13,7 @@ const int WSIZE = 80;
 int main()
 {
 	//taille de la fenetre
-	system("mode con LINES=21 COLS=80");
+	system("mode con LINES=20 COLS=80");
 
 	//Affichage de la bannière
 	disp("pokertse");

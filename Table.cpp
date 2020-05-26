@@ -222,10 +222,10 @@ void Table::dispJeu() {
 
 	// Affichage barre superieure
 	line(WSIZE);
-	cout << "  " << map(step);
-	line(WSIZE/3.5, " ", false);
-	cout<< "jeton : " << this->getMe().getCoins() << "  mise :" << getMe().getMise();
-	line(WSIZE/3," ",false);
+	cout << " " << map(step)<< " |";
+	line(WSIZE/5, " ", false);
+	cout<< "jeton : " << this->getMe().getCoins() << "| mise : " << getMe().getMise();
+	line(WSIZE/4," ",false);
 	cout << "|  "<<(isHost ? " host" : "client") << endl;
 	line(WSIZE);
 
