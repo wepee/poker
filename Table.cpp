@@ -125,10 +125,6 @@ bool Table::action() {
 					}
 
 					
-
-
-
-
 				}
 			}
 					if (fin_tour == false) {
