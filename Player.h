@@ -34,7 +34,7 @@ public:
 	//accesseur jeton
 	int getCoins() { return coins; }; 
 	// Calcule le score de la meilleure combinaison entre 2 mains
-	int getScore(Player& secondHand);		
+	int getScore(vector<Card> secondHand);
 	//Changement mise
 	void changeMise(int new_mise) { mise+=new_mise; };
 	// Donne une main du nombre de carte choisi
