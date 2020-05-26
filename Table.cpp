@@ -227,7 +227,7 @@ bool Table::action() {
 		}
 		//getscore
 		//affiche winner
-		if (me.getScore(me.getCards) > opponent.getScore(opponent.getCards)) {
+		if (me.getScore(deck) > opponent.getScore(deck)) {
 			me.changeCoins(coins);
 			changeCoins(-coins);
 		}
