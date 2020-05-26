@@ -110,6 +110,7 @@ bool Table::action() {
 					disp("Bonne journée ... ");
 					fin_tour = true;
 					retour = true;
+					atoidejouer = true;
 				}
 				else {
 					mise = stoi(smise);
@@ -166,7 +167,7 @@ bool Table::action() {
 							waitAck(subStep);
 							dispJeu();
 				
-								fin_tour = true;
+							fin_tour = true;
 							
 							atoidejouer = false;
 							break;
@@ -189,8 +190,9 @@ bool Table::action() {
 				
 			
 		}
-			if(step!=Step::river){
+			if(step != Step::river){
 			nextStep();
+			dispJeu();
 			}
 			else{
 			retour = true;
