@@ -3,6 +3,7 @@
 #include <string> 
 #include <iostream> 
 
+using namespace std;
 
 Table::Table(string key):Player(), step(Step::pre_flop),od("poker",key) {
 	
@@ -229,7 +230,7 @@ bool Table::action() {
 
 
 	void Table::deroulemain() {
-		
+		string attente;
 		while(me.getCoins()>0 && opponent.getCoins()> 0){
 		//relancer tant que personne a 0 jetons
 			step = Step::pre_flop;
@@ -254,9 +255,14 @@ bool Table::action() {
 			}
 		}
 		//distribue pot au winner
-		cout << "appuyer sur entrer pour jouer la prochaine main"<< endl;
-		
+		cout << "vous avez : " << endl ;
+		me.getScore(deck);
+		cout << "votre adversaire a : " << endl;
+		opponent.getScore(deck);
 
+		cout << "taper 1 pour jouer la prochaine main"<< endl;
+		cin >> attente;
+		//attente écran d'affichage du winner
 		}
 	}
 
