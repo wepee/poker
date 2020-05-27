@@ -207,7 +207,7 @@ bool Table::action() {
 				
 			
 		}
-			if(step != Step::river && !me.getIsFold && !opponent.getIsFold){
+			if(step != Step::river && !me.getIsFold() && !opponent.getIsFold()){
 			nextStep();
 			dispJeu();
 			}
@@ -218,7 +218,7 @@ bool Table::action() {
 				changeCoins(-coins);
 				}
 					else {
-					if (opponent.getIsFold) {
+					if (opponent.getIsFold()) {
 						me.changeCoins(coins);
 						changeCoins(-coins);
 					}
