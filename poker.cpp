@@ -13,7 +13,7 @@ const int WSIZE = 80;
 int main()
 {
 	//taille de la fenetre
-	system("mode con LINES=21 COLS=80");
+	system("mode con LINES=20 COLS=80");
 
 	//Affichage de la bannière
 	disp("pokertse");
@@ -21,7 +21,7 @@ int main()
 
 	//On demande l
 	string key;
-	disp("Quel est le numero de votre salle ?");
+	disp("Quel est le nom de votre salle ?");
 	getline(cin, key);
 
 
@@ -42,7 +42,7 @@ int main()
 	
 	table.dispJeu();
 
-	table.action();
+	table.deroulemain();
 
 	system("pause");
 

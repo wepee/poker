@@ -27,8 +27,117 @@ bool sortByRank(Card& a, Card& b) {
 	return (a.getRank() < b.getRank());
 }
 
-void Player::shuffle() {
+int getScoreSameRank(vector<Card> deck){	
+	
+	long score = 0;
+	int paire = 0;
 
+	//recherche des combinaisons
+	for (vector<Card>::iterator it = deck.begin(); it != deck.end(); it++) {
+
+		//Suite
+		if (it->getRank() - (it + 1)->getRank() == -1 && it->getRank() - (it + 2)->getRank() == -2 && it->getRank() - (it + 3)->getRank() == -3 && it->getRank() - (it + 4)->getRank() == -4) {
+			cout << " Vous avez une suite de niveau" << map(it->getRank()) << endl;
+			score += 100000000 * it->getRank();
+
+
+			if (it >= deck.end() - 1)
+				break;
+		}
+
+		//Carré
+		if (it->getRank() == (it + 1)->getRank() && it->getRank() == (it + 2)->getRank() && it->getRank() == (it + 3)->getRank()) {
+			cout << "Vous avez un carre de " << map(it->getRank()) << endl;
+			score += 1000000 * it->getRank();
+
+			//si on trouve un carré passer 3 cartes
+			if (it < deck.end() - 3)
+				it += 3;
+			//Si on est à la fin du paquet on arrete
+			else
+				break;
+		}
+		//Brelan 	
+		else if (it->getRank() == (it + 1)->getRank() && it->getRank() == (it + 2)->getRank()) {
+			score += 10000 * it->getRank();
+			cout << " Vous avez un brelan de " << map(it->getRank()) << endl;
+
+			//Permet de ne compter qu'une paire quand il y a 3 cartes de meme rang
+			if (it != deck.end() - 2)
+				it += 2;
+			else
+				break;
+
+		}
+		//paire
+
+		else if (it->getRank() == (it + 1)->getRank()) {
+			cout << " Vous avez une paire de " << map(it->getRank()) << endl;
+			score += 100 * it->getRank();
+
+			//Permet de ne compter qu'une paire quand il y a 3 cartes de meme rang
+			if (it >= deck.end() - 1)
+				it++;
+			else
+				break;
+		}
+
+
+	}
+	//comptage des paires
+	if (score == 0)
+		cout << "il n'y a pas de paire" << endl;
+	else
+		cout << "il y a " << paire << " paire(s)" << endl;
+
+	return score;
+}
+
+int getScoreShape(vector<Card> deck) {
+
+	long score = 0;
+
+	//recherche des combinaisons
+	for (vector<Card>::iterator it = deck.begin(); it != deck.end(); it++) {
+
+		//Couleur
+		if (it->getShape() == (it + 1)->getShape() && it->getShape() == (it + 2)->getShape() && it->getShape() == (it + 3)->getShape() && it->getShape() == (it + 4)->getShape()) {
+			cout << "Vous avez une couleur de " << map(it->getShape()) << endl;
+			score += 1000000 * it->getRank();
+
+			//si on trouve un carré passer 4 cartes
+			if (it < deck.end() - 4)
+				it += 4;
+			//Si on est à la fin du paquet on arrete
+			else
+				break;
+		}
+		return score;
+	}
+}
+
+int getScoreRank(vector<Card> deck) {
+	long score = 0;
+
+	//recherche des combinaisons
+	for (vector<Card>::iterator it = deck.begin(); it != deck.end(); it++) {
+
+		//Suite
+		if (it->getRank() - (it + 1)->getRank() == -1 && it->getRank() - (it + 2)->getRank() == -2 && it->getRank() - (it + 3)->getRank() == -3 && it->getRank() - (it + 4)->getRank() == -4) {
+			cout << " Vous avez une suite de niveau" << map(it->getRank()) << endl;
+			score += 100000000 * it->getRank();
+
+
+			if (it >= deck.end() - 4)
+				break;
+		}
+	}
+
+	return score;
+}
+
+void Player::shuffle() {
+	srand(time(NULL));
 	for (int i = 0; i < cards.size();i++) {
 		int j = rand() % 52;
 		Card temp = cards[i];
@@ -38,8 +147,8 @@ void Player::shuffle() {
 }
 
 
-int Player::getScore(Player& secondHand) {
-	srand(time(NULL));
+int Player::getScore(vector<Card> secondHand) {
+	
 	/*
 	score :
 
@@ -49,70 +158,27 @@ int Player::getScore(Player& secondHand) {
 
 	-------: rank * 1 000 000;
 
+	Suite : rank * 100 000 000
+
 	*/
-	int score = 0;
-	int paire = 0;
-	int brelan = 0;
+	long score = 0;
+
 
 
 
 	//on fusionne les 2 paquets dans temp
-	vector<Card> temp = secondHand.getCards();
+	vector<Card> temp = secondHand;
 	temp.insert(temp.end(), cards.begin(), cards.end());
 
 	//on trie le paquet
 	sort(temp.begin(), temp.end(), sortByRank);
 
-
-	//recherche des paires
-	for (vector<Card>::iterator it = temp.begin(); it != temp.end(); it++) {
-		
-		//Carré
-		if (it->getRank() == (it + 1)->getRank() && it->getRank() == (it + 2)->getRank() && it->getRank() == (it + 3)->getRank()) {
-			cout << "Vous avez un carre de "<< map(it->getRank()) <<endl;
-			score += 1000000*it->getRank();
-
-			//si on trouve un carré passer 3 cartes
-			if (it < temp.end() - 3)
-				it += 3;
-			//Si on est à la fin du paquet on arrete
-			else
-				break;
-		}
-		//Brelan 	
-		else if (it->getRank() == (it + 1)->getRank() && it->getRank() ==  (it + 2)->getRank()) {
-			score += 10000 * it->getRank();
-			cout << " Vous avez un brelan de " << map(it->getRank()) << endl;
-
-			//Permet de ne compter qu'une paire quand il y a 3 cartes de meme rang
-			if (it != temp.end() - 2)
-				it+=2;
-			else
-				break;
-
-			brelan++;
-		}
-		//paire
-			
-		else if (it->getRank() == (it + 1)->getRank()) {
-			cout << " Vous avez une paire de " << map(it->getRank()) << endl;
-			score += 100 * it->getRank();
-
-			//Permet de ne compter qu'une paire quand il y a 3 cartes de meme rang
-			if (it >= temp.end() - 1) 
-				it++;
-			else 
-				break;
-		}
-
-
-
-	}
-	//comptage des paires
-	if (score == 0)
-		cout << "il n'y a pas de paire" << endl;
-	else
-		cout << "il y a " << paire << " paire(s)" << endl;
+	//Cherche les paires brelans et carrés
+	score += getScoreSameRank(temp);
+	// Cherche les suites
+	score += getScoreRank(temp);
+	//cherche les couleurs
+	score += getScoreShape(temp);
 
 
 

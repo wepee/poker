@@ -24,11 +24,9 @@ private:
 	int subStep = 0;
 	Player me;
 	Player opponent;
-	vector<Card> deck_t;
+	vector<Card> deck;
 	bool isHost = false;
 	ODrive od;
-	//pour pouvoir le fermer à la fin
-	string commFile;
 
 public:
 	//Constructeur d'une table d'Id key
@@ -37,12 +35,13 @@ public:
 	//Afficher le jeu
 	void dispJeu();
 
-	//recuperer l'étape de la Table
-	Step getStep() { return step; };
+	//Aller à l'étape suivante
+	void nextStep() { step = static_cast<Step>(step + 1); };
 
 	// Recuperer l'etape d'une trame commFile
 	int getStep(string txt);
 
+	
 	// Recuperer le joueur
 	Player getMe() { return me; };
 
@@ -53,7 +52,7 @@ public:
 	void displayCards(int nb = 5);
 
 	//Presente une liste d'action à l'utilisateur
-	void action();
+	bool action();
 
 	//Permet d'envoyer une trame avec subStep
 	void send(string message) { od.write(to_string(subStep) + "|" + message); };
@@ -64,17 +63,20 @@ public:
 	//Lire la trame lorsque subStep = onlyif
 	string read(int onlyIf);
 
+	//Lire en direct 
+	string read() { return od.read(true); }
+
 	//Attendre l'accusé de reception _step
 	void waitAck(int _step);
 
 	//Envoyer un accusé de reception
 	void ack(int _step);
-
-	//Lire en direct 
-	string read() { return od.read(true); }
+	
+	//déroule le game
+	void deroulemain();
 
 	//Destructeur : supprimer le ficher de communication
-	~Table() {if (isHost) od.delFile(od.getFullName(commFile)); };
+	~Table() {if (isHost) od.delFile(od.getFullName(od.getCommFile())); };
 };
 
 	extern const int WSIZE;
