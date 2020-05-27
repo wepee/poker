@@ -233,7 +233,8 @@ bool Table::action() {
 		while(me.getCoins()>0 && opponent.getCoins()> 0){
 		//relancer tant que personne a 0 jetons
 			step = Step::pre_flop;
-			
+			me.changeIsFold(false);
+			opponent.changeIsFold(false);
 			while (1) {
 				
 			if(action())
@@ -254,11 +255,7 @@ bool Table::action() {
 			}
 		}
 		//distribue pot au winner
-		cout << "vous avez : " << endl ;
-		me.getScore(deck);
-		cout << "votre adversaire a : " << endl;
-		opponent.getScore(deck);
-
+		winnerScreen();
 		cout << "taper 1 pour jouer la prochaine main"<< endl;
 		cin >> attente;
 		//attente écran d'affichage du winner
