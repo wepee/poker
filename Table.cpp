@@ -96,8 +96,7 @@ bool Table::action() {
 	bool oallin = false;
 	bool mallin = false;
 	bool retour = false;
-	bool mfold = false;
-	bool ofold = false;
+	
 		dispJeu();
 		bool atoidejouer = true;
 		if (!isHost) {
@@ -118,7 +117,7 @@ bool Table::action() {
 					fin_tour = true;
 					retour = true;
 					atoidejouer = true;
-					ofold = true;
+					opponent.changeIsFold(true);
 				}
 				else {
 					mise = stoi(smise);
@@ -194,7 +193,7 @@ bool Table::action() {
 							waitAck(subStep);
 							fin_tour = true;
 							atoidejouer = false;
-							mfold = true;
+							me.changeIsFold(true);
 							break;
 						default:
 							disp("votre commande n'est pas reconnue, veuillez recommencer");
@@ -208,18 +207,18 @@ bool Table::action() {
 				
 			
 		}
-			if(step != Step::river && !mfold && !ofold){
+			if(step != Step::river && !me.getIsFold && !opponent.getIsFold){
 			nextStep();
 			dispJeu();
 			}
 			else{
 				retour = true;
-				if (mfold) {
+				if (me.getIsFold()) {
 				opponent.changeCoins(coins);
 				changeCoins(-coins);
 				}
 					else {
-					if (ofold) {
+					if (opponent.getIsFold) {
 						me.changeCoins(coins);
 						changeCoins(-coins);
 					}
