@@ -27,10 +27,13 @@ private:
 	vector<Card> deck;
 	bool isHost = false;
 	ODrive od;
+	string key;
 
 public:
 	//Constructeur d'une table d'Id key
-	Table(string key);
+	Table(string _key);
+
+	Table(string _key, int myCoins, int opponentCoins);
 
 	//Afficher le jeu
 	void dispJeu();

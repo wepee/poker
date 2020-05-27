@@ -13,7 +13,7 @@ Card::Card(Shape shape, int _nb) : shape(shape),rank(_nb){
 void Card::display() {
 
 	switch (rank) {
-	case 1:
+	case 14:
 		cout << "As de " << map(shape) ;
 		break;
 	case 13:

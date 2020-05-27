@@ -75,11 +75,6 @@ int getScoreSameRank(vector<Card> deck){
 
 
 	}
-	//comptage des paires
-	if (score == 0)
-		cout << "il n'y a pas de paire" << endl;
-	else
-		cout << "il y a " << paire << " paire(s)" << endl;
 
 	return score;
 }
@@ -129,18 +124,6 @@ int getScoreRank(vector<Card> deck) {
 }
 
 
-void Player::shuffle() {
-	srand(unsigned(time(0)));
-
-	for (int i = 0; i < cards.size();i++) {
-		int j = rand() % 52;
-		Card temp = cards[i];
-		cards[i] = cards[j];
-		cards[j] = temp;
-	}
-}
-
-
 int Player::getScore(vector<Card> secondHand) {
 	
 	/*
@@ -177,7 +160,7 @@ int Player::getScore(vector<Card> secondHand) {
 }
 
 vector<Card> Player::giveHand(int _nb) {
-
+	srand(unsigned(time(0)));
 	try {
 		vector<Card> deck;
 

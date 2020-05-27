@@ -5,13 +5,14 @@
 
 using namespace std;
 
-Table::Table(string key):Player(), step(Step::pre_flop),od("poker",key) {
+Table::Table(string _key):Player(), step(Step::pre_flop),od("poker",_key), key(_key) {
 	
 	//remettre coins à 0 car un player est initialisé à 1000 coins
 	coins = 0;
 
 	// repertoire mere
 	string baseDir = "poker";
+
 
 	// mise en place de l'arborencence des fichiers de communication
 	string roomDir = baseDir + '/' + key;
@@ -91,6 +92,14 @@ Table::Table(string key):Player(), step(Step::pre_flop),od("poker",key) {
 	}
 
 }
+
+Table::Table(string _key,int myCoins, int opponentCoins ) :Table(key) {
+
+	me.changeCoins(myCoins - 1000);
+	opponent.changeCoins(opponentCoins - 1000);
+}
+
+
 
 bool Table::action() {
 	bool oallin = false;
@@ -228,7 +237,7 @@ bool Table::action() {
 	}
 
 
-	void Table::deroulemain() {
+void Table::deroulemain() {
 		string attente;
 		while(me.getCoins()>0 && opponent.getCoins()> 0){
 		//relancer tant que personne a 0 jetons
@@ -256,18 +265,22 @@ bool Table::action() {
 		}
 		//distribue pot au winner
 		winnerScreen();
-		cout << "taper 1 pour jouer la prochaine main"<< endl;
+		cout << "taper 1 pour jouer la prochaine partie "<< endl;
 		cin >> attente;
-		//attente écran d'affichage du winner
+		
+		Table t(key,me.getCoins(),opponent.getCoins());
+		t.dispJeu();
+		t.deroulemain();
+
 		}
 
 	}
 
-	void Table::winnerScreen() {
+void Table::winnerScreen() {
 
 		system("cls");
 		disp("pokertse");
-		lineBreak(3);
+		lineBreak(1);
 
 		disp("Sur la table :");
 		displayCards();
@@ -289,14 +302,23 @@ bool Table::action() {
 		int myScore = me.getScore(deck);
 
 		//Si je suis couché
-		if(me.getIsFold() || oppenentScore > myScore){
+		if ((me.getIsFold() || oppenentScore > myScore) && !opponent.getIsFold()) {
 			//J'ai perdu
 
 			disp("looser fdp");
-		
+
+		}
+		else if (myScore == oppenentScore)
+		{
+			//on verifie qui a la plus forte main
+			if (me.getCards()[0].getRank() > opponent.getCards()[0].getRank())
+				if (me.getCards()[0].getRank() > opponent.getCards()[1].getRank())
+					disp("j'ai gangé fdp");
+				else
+					disp("perdu fdp");
 		}
 		else{
-			disp("j'ai gagné fdp");
+			disp("j'ai gagne fdp");
 
 		}
 
