@@ -92,6 +92,8 @@ Table::Table(string key):Player(), step(Step::pre_flop),od("poker",key) {
 }
 
 bool Table::action() {
+	bool oallin = false;
+	bool mallin = false;
 	bool retour = false;
 	bool mfold = false;
 	bool ofold = false;
@@ -126,9 +128,13 @@ bool Table::action() {
 					dispJeu();
 					cout << "L'autre joueur a misé " << mise << " mise fichier : " << smise << endl;
 					
+					if (opponent.getCoins() == 0) {
+						oallin = true;
+					}
 					
 					if (me.getMise() == opponent.getMise() && regledemerde == 1) {
 						fin_tour = true;
+						if (mallin) { retour = true; }
 						//atoidejouer = true;
 					}
 					regledemerde = 1;
@@ -162,6 +168,9 @@ bool Table::action() {
 							dispJeu();
 							atoidejouer = false;
 							regledemerde = 1;
+							if(me.getCoins() == 0){
+								mallin = true;
+							}
 							break;
 						case 2:
 							mise = (opponent.getMise()-me.getMise());
@@ -172,6 +181,7 @@ bool Table::action() {
 							send(to_string(mise));
 							waitAck(subStep);
 							dispJeu();
+							if (oallin) { retour = true; }
 							if (regledemerde == 1)
 								fin_tour = true;
 							regledemerde = 1;
@@ -223,7 +233,7 @@ bool Table::action() {
 		while(me.getCoins()>0 && opponent.getCoins()> 0){
 		//relancer tant que personne a 0 jetons
 			step = Step::pre_flop;
-
+			
 			while (1) {
 				
 			if(action())
