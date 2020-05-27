@@ -54,7 +54,7 @@ Table::Table(string key):Player(), step(Step::pre_flop),od("poker",key) {
 			loading();
 		
 
-		//je distribu et j'envoie
+		//je distribus et j'envoie
 		me.changeCards(giveHand(2));
 		opponent.changeCards(giveHand(2));
 		deck = giveHand(5);
@@ -264,9 +264,54 @@ bool Table::action() {
 		cin >> attente;
 		//attente écran d'affichage du winner
 		}
+
 	}
 
+	void Table::winnerScreen() {
 
+		system("cls");
+		disp("pokertse");
+		lineBreak(3);
+
+		disp("Sur la table :");
+		displayCards();
+		lineBreak(2);
+
+		disp("Les cartes de l'autre joueur : ");
+		opponent.displayCards();
+		lineBreak(1);
+
+		disp("Mes cartes : ");
+		me.displayCards();
+		lineBreak;
+
+		disp("Votre adversaire a :");
+		int oppenentScore = opponent.getScore(deck);
+
+		disp("Vous avez :");
+		int myScore = me.getScore(deck);
+
+		//Si je suis couché
+		if(me.getIsFold() || oppenentScore > myScore){
+			//J'ai perdu
+
+			disp("looser fdp");
+		
+		}
+		else{
+			disp("j'ai gagné fdp")
+
+		}
+
+
+
+
+
+
+
+
+
+	}
 	
 
 

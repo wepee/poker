@@ -75,6 +75,8 @@ public:
 	//déroule le game
 	void deroulemain();
 
+	void winnerScreen();
+
 	//Destructeur : supprimer le ficher de communication
 	~Table() {if (isHost) od.delFile(od.getFullName(od.getCommFile())); };
 };
