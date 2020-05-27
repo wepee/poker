@@ -130,7 +130,8 @@ int getScoreRank(vector<Card> deck) {
 
 
 void Player::shuffle() {
-	srand(time(NULL));
+	srand(unsigned(time(0)));
+
 	for (int i = 0; i < cards.size();i++) {
 		int j = rand() % 52;
 		Card temp = cards[i];

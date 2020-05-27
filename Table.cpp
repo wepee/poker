@@ -286,6 +286,7 @@ bool Table::action() {
 
 		disp("Votre adversaire a :");
 		int oppenentScore = opponent.getScore(deck);
+		lineBreak(1);
 
 		disp("Vous avez :");
 		int myScore = me.getScore(deck);
@@ -298,17 +299,9 @@ bool Table::action() {
 		
 		}
 		else{
-			disp("j'ai gagné fdp")
+			disp("j'ai gagné fdp");
 
 		}
-
-
-
-
-
-
-
-
 
 	}
 	
