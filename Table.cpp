@@ -219,7 +219,7 @@ bool Table::action() {
 
 	void Table::deroulemain() {
 		
-		while(me.getCoins()>0 && opponent.getCoins> 0){
+		while(me.getCoins()>0 && opponent.getCoins()> 0){
 		//relancer tant que personne a 0 thunes
 			while (1) {
 			if(action())
@@ -232,7 +232,7 @@ bool Table::action() {
 			changeCoins(-coins);
 		}
 		else {
-			if (me.getScore(me.getCards) < opponent.getScore(opponent.getCards)) {
+			if (me.getScore(deck) < opponent.getScore(deck)) {
 				opponent.changeCoins(coins);
 				changeCoins(-coins);
 			}
