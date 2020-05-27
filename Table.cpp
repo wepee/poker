@@ -3,6 +3,7 @@
 #include <string> 
 #include <iostream> 
 
+using namespace std;
 
 Table::Table(string key):Player(), step(Step::pre_flop),od("poker",key) {
 	
@@ -92,6 +93,8 @@ Table::Table(string key):Player(), step(Step::pre_flop),od("poker",key) {
 }
 
 bool Table::action() {
+	bool oallin = false;
+	bool mallin = false;
 	bool retour = false;
 	bool mfold = false;
 	bool ofold = false;
@@ -119,18 +122,23 @@ bool Table::action() {
 				}
 				else {
 					mise = stoi(smise);
-						opponent.changeCoins(-mise);
+					opponent.changeCoins(-mise);
 					opponent.changeMise(mise);
 					changeCoins(mise);
-					regledemerde = 1;
+					
 					dispJeu();
 					cout << "L'autre joueur a misé " << mise << " mise fichier : " << smise << endl;
 					
-					
-					if (me.getMise() == opponent.getMise() && regledemerde ==1) {
-						fin_tour = true;
+					if (opponent.getCoins() == 0) {
+						oallin = true;
 					}
 					
+					if (me.getMise() == opponent.getMise() && regledemerde == 1) {
+						fin_tour = true;
+						if (mallin) { retour = true; }
+						//atoidejouer = true;
+					}
+					regledemerde = 1;
 				}
 			}
 					if (fin_tour == false) {
@@ -161,9 +169,12 @@ bool Table::action() {
 							dispJeu();
 							atoidejouer = false;
 							regledemerde = 1;
+							if(me.getCoins() == 0){
+								mallin = true;
+							}
 							break;
 						case 2:
-							mise = -((me.getMise() * 2) - coins);
+							mise = (opponent.getMise()-me.getMise());
 							me.changeCoins(-mise);
 							changeCoins(mise);
 							me.changeMise(mise);
@@ -171,6 +182,7 @@ bool Table::action() {
 							send(to_string(mise));
 							waitAck(subStep);
 							dispJeu();
+							if (oallin) { retour = true; }
 							if (regledemerde == 1)
 								fin_tour = true;
 							regledemerde = 1;
@@ -203,12 +215,12 @@ bool Table::action() {
 			else{
 				retour = true;
 				if (mfold) {
-				me.changeCoins(coins);
+				opponent.changeCoins(coins);
 				changeCoins(-coins);
 				}
 					else {
 					if (ofold) {
-						opponent.changeCoins(coins);
+						me.changeCoins(coins);
 						changeCoins(-coins);
 					}
 				}
@@ -218,13 +230,18 @@ bool Table::action() {
 
 
 	void Table::deroulemain() {
-		
+		string attente;
 		while(me.getCoins()>0 && opponent.getCoins()> 0){
-		//relancer tant que personne a 0 thunes
+		//relancer tant que personne a 0 jetons
+			step = Step::pre_flop;
+			
 			while (1) {
+				
 			if(action())
 			break;
 		}
+			me.changeMise(-me.getMise());
+				opponent.changeMise(-opponent.getMise());
 		//getscore
 		//affiche winner
 		if (me.getScore(deck) > opponent.getScore(deck)) {
@@ -238,10 +255,14 @@ bool Table::action() {
 			}
 		}
 		//distribue pot au winner
-		
-		
-		
+		cout << "vous avez : " << endl ;
+		me.getScore(deck);
+		cout << "votre adversaire a : " << endl;
+		opponent.getScore(deck);
 
+		cout << "taper 1 pour jouer la prochaine main"<< endl;
+		cin >> attente;
+		//attente écran d'affichage du winner
 		}
 	}
 

@@ -25,8 +25,11 @@ int main()
 	getline(cin, key);
 
 
-	Table table(key);
+	//vector<Card> deck = Card::toCards("|carreau*3|carreau*4|carreau*5|carreau*6");
 
+	//Player player(Card::toCards("|pique*2|"));
+
+	//player.getScore(deck);
 	
 
 	//table.send("nique ta mere");
@@ -38,15 +41,16 @@ int main()
 
 
 	//Card card(Shape::Pike, 33);
-	//Table jeu(key);
+	Table table(key);
 	
 	table.dispJeu();
 
 	table.deroulemain();
 
-	system("pause");
 
-	return 0;
+	//system("pause");
+
+	//return 0;
 	
 }
 
