@@ -16,20 +16,20 @@ int main()
 	system("mode con LINES=20 COLS=80");
 
 	//Affichage de la bannière
-	//disp("pokertse");
-	//lineBreak(3);
+	disp("pokertse");
+	lineBreak(3);
 
 	//On demande l
 	string key;
-	//disp("Quel est le nom de votre salle ?");
-	//getline(cin, key);
+	disp("Quel est le nom de votre salle ?");
+	getline(cin, key);
 
 
-	vector<Card> deck = Card::toCards("|carreau*3|carreau*4|carreau*5|carreau*6");
+	//vector<Card> deck = Card::toCards("|carreau*3|carreau*4|carreau*5|carreau*6");
 
-	Player player(Card::toCards("|pique*2|"));
+	//Player player(Card::toCards("|pique*2|"));
 
-	player.getScore(deck);
+	//player.getScore(deck);
 	
 
 	//table.send("nique ta mere");
@@ -41,11 +41,11 @@ int main()
 
 
 	//Card card(Shape::Pike, 33);
-	//Table jeu(key);
+	Table table(key);
 	
-	//table.dispJeu();
+	table.dispJeu();
 
-	//table.deroulemain();
+	table.deroulemain();
 
 
 	//system("pause");
