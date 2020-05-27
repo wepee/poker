@@ -2,6 +2,8 @@
 #pragma once
 #include<string>
 #include"Card.h"
+#include <io.h>
+#include <fcntl.h>
 #include <windows.h>
 
 using namespace std;

@@ -16,6 +16,41 @@ string map(enum Shape _shape) {
 		break;
 	}
 
+
+	///* Set the stream mode to print Unicode-16 text */
+	//_setmode(_fileno(stdout), _O_U16TEXT);
+
+	//wchar_t symbol = nullptr;
+
+	///* We are trying to get unicode code to print the symbole of each suit.*/
+	//if (suit == "spade")
+	//{
+	//	symbol = L"\u2660"; // Unicode code for spades
+	//}
+	//else if (suit == "heart")
+	//{
+	//	symbol = L"\u2665";
+	//}
+	//else if (suit == "diamond")
+	//{
+	//	symbol = L"\u2666";
+	//}
+	//else if (suit == "club")
+	//{
+	//	symbol = L"\u2663";
+	//}
+
+	//wstring value(value.begin(), value.end()); // Converting the string value of the card into wchar_t * value to print it with the symbol.
+	//const wchar_t* val = value.c_str(); // Converting to wchar_t* type
+
+	///* Print Unicode-16 text/
+	//wcout << value + L" " + symbol;
+
+	/// Reset the standard mode to print standard text */
+	//_setmode(_fileno(stdout), _O_TEXT);
+
+	
+
 }
 
 string map(int _rank) {
