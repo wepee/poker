@@ -16,7 +16,7 @@ protected:
 	int coins;   //Ses jetons
 	vector <Card> cards; //la main du joueur (=ses cartes)
 	int mise; // mise que le joueur a fait ce tour
-
+	bool isFold;
 
 public:
 	// Constructeur par defaut
@@ -43,6 +43,10 @@ public:
 	void changeCoins(int _coins) { coins += _coins; };
 	// accesseur jeton
 	int getMise() { return mise; }; 
+	//accesseur isfold
+	bool getIsFold() { return isFold; };
+	//changement isFold
+	void changeIsFold(bool aled) { isFold = aled; };
 
 };
 
