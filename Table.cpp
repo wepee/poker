@@ -162,8 +162,8 @@ bool Table::action() {
 						disp("Que voulez-vous faire ?");
 
 
-						disp("1 - relancer/miser");
-						disp("2 - suivre");
+						disp("1 - miser / relancer ");
+						disp("2 - suivre / check");
 						disp("3 - se coucher");
 
 						cout << "> ";
