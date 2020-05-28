@@ -334,21 +334,18 @@ void Table::winnerScreen() {
 		else if (myScore == oppenentScore)
 		{
 			//on verifie qui a la plus forte main
-			if (me.getCards()[0].getRank() > opponent.getCards()[0].getRank()) 
+			if (me.getCards()[0].getRank() > opponent.getCards()[0].getRank() && me.getCards()[0].getRank() > opponent.getCards()[1].getRank())
 			{
-				if (me.getCards()[0].getRank() > opponent.getCards()[1].getRank())
-					disp("won");
-				else
-					disp("lose");
+				disp("won");
+			}
+			else if (me.getCards()[1].getRank() > opponent.getCards()[0].getRank() && me.getCards()[1].getRank() > opponent.getCards()[1].getRank()) {
+				disp("won");
 			}
 			else {
-				if (opponent.getCards()[0].getRank() > me.getCards()[1].getRank())
-					disp("won");
-				else
 					disp("lose");
-
 			}
-
+					
+			
 
 		}
 		else{
