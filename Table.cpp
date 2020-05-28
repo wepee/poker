@@ -334,11 +334,22 @@ void Table::winnerScreen() {
 		else if (myScore == oppenentScore)
 		{
 			//on verifie qui a la plus forte main
-			if (me.getCards()[0].getRank() > opponent.getCards()[0].getRank())
+			if (me.getCards()[0].getRank() > opponent.getCards()[0].getRank()) 
+			{
 				if (me.getCards()[0].getRank() > opponent.getCards()[1].getRank())
 					disp("won");
 				else
 					disp("lose");
+			}
+			else {
+				if (opponent.getCards()[0].getRank() > me.getCards()[1].getRank())
+					disp("won");
+				else
+					disp("lose");
+
+			}
+
+
 		}
 		else{
 			disp("won");
@@ -408,7 +419,7 @@ void Table::displayCards(int nb) {
 
 	for (int i = 0; i < nb; i++) {
 		if (i == 0)
-			cout << " | ";
+			cout << "| ";
 
 		deck[i].display();
 		cout << " | ";
@@ -453,7 +464,11 @@ string Table::read(int onlyIf){
 		}
 			i++;
 	}
-	return infof;
+
+	if (infof != "")
+		return infof;
+	else
+		return "-1";
 }
 
 void Table::waitAck(int _step)
