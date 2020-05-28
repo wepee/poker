@@ -16,7 +16,7 @@ protected:
 	int coins;   //Ses jetons
 	vector <Card> cards; //la main du joueur (=ses cartes)
 	int mise; // mise que le joueur a fait ce tour
-	bool isFold;
+	bool isFold = false;
 
 public:
 	// Constructeur par defaut

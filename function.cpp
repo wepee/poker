@@ -115,8 +115,44 @@ void disp(string message) {
 		disp("		| __] |  | |_/  |___  |___/   |   [__	|___");
 		disp("		|     |__| | |_ |___  |  |    |   ___]  |___");
 	}
+	else if (message == "won") {
+		lineBreak(3);
+		line(WSIZE / 3, " ", false);
+		disp("Félicitations ! :)");
+		lineBreak(2);
+
+		disp("##    ##  #######  ##     ##    ##      ##  #######  ##    ## ");
+		disp(" ##  ##  ##     ## ##     ##    ##  ##  ## ##     ## ###   ## ");
+		disp("  ####   ##     ## ##     ##    ##  ##  ## ##     ## ####  ## ");
+		disp("   ##    ##     ## ##     ##    ##  ##  ## ##     ## ## ## ## ");
+		disp("   ##    ##     ## ##     ##    ##  ##  ## ##     ## ##  #### ");
+		disp("   ##    ##     ## ##     ##    ##  ##  ## ##     ## ##   ### ");
+		disp("   ##     #######   #######      ###  ###   #######  ##    ## ");
+
+		lineBreak(1);
+		
+	}
+	else if (message == "lose"){
+		lineBreak(3);
+		line(WSIZE / 3, " ", false);
+		disp("Nous sommes désolé ....  :( ");
+		lineBreak(2);
+
+
+		disp("##    ##  #######  ##     ##    ##        #######   ######  ######## ");
+		disp(" ##  ##  ##     ## ##     ##    ##       ##     ## ##    ## ##       ");
+		disp("  ####   ##     ## ##     ##    ##       ##     ## ##       ##       ");
+		disp("   ##    ##     ## ##     ##    ##       ##     ##  ######  ######   ");
+		disp("   ##    ##     ## ##     ##    ##       ##     ##       ## ##       ");
+		disp("   ##    ##     ## ##     ##    ##       ##     ## ##    ## ##       ");
+		disp("   ##     #######   #######     ########  #######   ######  ######## ");
+
+		lineBreak(1);
+
+
+	}
 	else
-	cout << message << endl;
+		cout << message << endl;
 }
 
 void loading(string car, int time, int size)

@@ -25,3 +25,5 @@ void disp(string message);
 
 //Barre de chargement 
 void loading(string car = ".",int time = 400, int size = 3);
+
+extern const int WSIZE;

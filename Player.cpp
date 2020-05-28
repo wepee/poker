@@ -1,6 +1,5 @@
 #include"Player.h"
 
-
 Player::Player(bool empty) : coins(1000), mise(0) {
 
 	if (!empty) {
@@ -123,7 +122,6 @@ int getScoreRank(vector<Card> deck) {
 	return score;
 }
 
-
 int Player::getScore(vector<Card> secondHand) {
 	
 	/*
@@ -155,6 +153,8 @@ int Player::getScore(vector<Card> secondHand) {
 	score += getScoreShape(temp);
 
 
+	if(score == 0)
+		disp("rien");
 
 	return score;
 }

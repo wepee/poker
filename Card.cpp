@@ -78,8 +78,8 @@ Card Card::toCard(string text) {
 	 for (int i = 0; i < _cards.size(); i++)
 		 cards += Card::toString(_cards[i]);
 
-
-	 return cards;
+	 //pour retirer le premier "|"
+	 return cards.erase(0, 1);
  }
 
  vector<Card> Card::toCards(string chaine)

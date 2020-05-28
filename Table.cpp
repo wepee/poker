@@ -7,6 +7,14 @@ using namespace std;
 
 Table::Table(string _key):Player(), step(Step::pre_flop),od("poker",_key), key(_key) {
 	
+	//taille de la fenetre
+	system("mode con LINES=20 COLS=80");
+
+	//Affichage de la bannière
+	disp("pokertse");
+	lineBreak(3);
+
+
 	//remettre coins à 0 car un player est initialisé à 1000 coins
 	coins = 0;
 
@@ -105,6 +113,7 @@ bool Table::action() {
 	bool oallin = false;
 	bool mallin = false;
 	bool retour = false;
+	string smise = "0";
 	
 		dispJeu();
 		bool atoidejouer = true;
@@ -135,7 +144,7 @@ bool Table::action() {
 					changeCoins(mise);
 					
 					dispJeu();
-					cout << "L'autre joueur a misé " << mise << " mise fichier : " << smise << endl;
+					cout << "L'autre joueur a misé " << smise << endl;
 					
 					if (opponent.getCoins() == 0) {
 						oallin = true;
@@ -206,6 +215,9 @@ bool Table::action() {
 							break;
 						default:
 							disp("votre commande n'est pas reconnue, veuillez recommencer");
+							
+							//degeu mais pour nous sortir de lamerde
+							ack(subStep);
 							Sleep(2000);
 							dispJeu();
 							action();
@@ -238,7 +250,7 @@ bool Table::action() {
 
 
 void Table::deroulemain() {
-		string attente;
+
 		while(me.getCoins()>0 && opponent.getCoins()> 0){
 		//relancer tant que personne a 0 jetons
 			step = Step::pre_flop;
@@ -265,8 +277,9 @@ void Table::deroulemain() {
 		}
 		//distribue pot au winner
 		winnerScreen();
-		cout << "taper 1 pour jouer la prochaine partie "<< endl;
-		cin >> attente;
+
+		disp("tapez sur une touche pour jouer la prochaine partie ");
+		system("PAUSE");
 		
 		Table t(key,me.getCoins(),opponent.getCoins());
 		t.dispJeu();
@@ -278,25 +291,35 @@ void Table::deroulemain() {
 
 void Table::winnerScreen() {
 
+		system("mode con LINES=45 COLS=80");
+		
 		system("cls");
+
+		
 		disp("pokertse");
-		lineBreak(1);
+		lineBreak(3);
 
 		disp("Sur la table :");
 		displayCards();
-		lineBreak(2);
+		line(WSIZE, "-", true);
+		lineBreak(1);
+
 
 		disp("Les cartes de l'autre joueur : ");
 		opponent.displayCards();
+		line(WSIZE, "-", true);
 		lineBreak(1);
 
 		disp("Mes cartes : ");
 		me.displayCards();
-		lineBreak;
+		line(WSIZE, "-", true);
+		lineBreak(1);
 
 		disp("Votre adversaire a :");
 		int oppenentScore = opponent.getScore(deck);
 		lineBreak(1);
+
+		line(WSIZE, "*", true);
 
 		disp("Vous avez :");
 		int myScore = me.getScore(deck);
@@ -305,7 +328,7 @@ void Table::winnerScreen() {
 		if ((me.getIsFold() || oppenentScore > myScore) && !opponent.getIsFold()) {
 			//J'ai perdu
 
-			disp("looser fdp");
+			disp("lose");
 
 		}
 		else if (myScore == oppenentScore)
@@ -313,12 +336,12 @@ void Table::winnerScreen() {
 			//on verifie qui a la plus forte main
 			if (me.getCards()[0].getRank() > opponent.getCards()[0].getRank())
 				if (me.getCards()[0].getRank() > opponent.getCards()[1].getRank())
-					disp("j'ai gangé fdp");
+					disp("won");
 				else
-					disp("perdu fdp");
+					disp("lose");
 		}
 		else{
-			disp("j'ai gagne fdp");
+			disp("won");
 
 		}
 
@@ -327,6 +350,7 @@ void Table::winnerScreen() {
 
 
 void Table::dispJeu() {
+
 
 	system("cls");
 
@@ -357,7 +381,7 @@ void Table::dispJeu() {
 		displayCards(4);
 		break;
 	case 3:
-		line(3, " ", false);
+		line(2, " ", false);
 		displayCards(5);
 		break;
 	default:
@@ -393,7 +417,17 @@ void Table::displayCards(int nb) {
 }
 
 int Table::getStep(string txt) {
-	return stoi(txt.substr(0,txt.find_first_of("|")));
+	try {
+		if (txt.substr(0, txt.find_first_of("|")) == "")
+			throw(string("impossible d'acceder au substep"));
+
+		return stoi(txt.substr(0,txt.find_first_of("|")));
+	}
+	catch (string error) {
+		cout << "...";
+		return -1;
+	}
+	
 };
 
 string Table::read(int onlyIf){
