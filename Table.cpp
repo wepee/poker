@@ -33,6 +33,7 @@ Table::Table(string _key):Player(), step(Step::pre_flop),od("poker",_key), key(_
 		od.mkDir(roomDir);
 		od.refresh(baseDir);
 	}
+
 	// Si le fichier ne mentionne pas le passage de l'hote 
 	if ( read()!="0|host" )
 	{
@@ -63,7 +64,7 @@ Table::Table(string _key):Player(), step(Step::pre_flop),od("poker",_key), key(_
 			loading();
 		
 
-		//je distribus et j'envoie
+		//je distribus les paquets
 		me.changeCards(giveHand(2));
 		opponent.changeCards(giveHand(2));
 		deck = giveHand(5);
@@ -106,8 +107,6 @@ Table::Table(string _key,int myCoins, int opponentCoins ) :Table(key) {
 	me.changeCoins(myCoins - 1000);
 	opponent.changeCoins(opponentCoins - 1000);
 }
-
-
 
 bool Table::action() {
 	bool oallin = false;
@@ -248,7 +247,6 @@ bool Table::action() {
 			return retour;
 	}
 
-
 void Table::deroulemain() {
 
 		while(me.getCoins()>0 && opponent.getCoins()> 0){
@@ -355,8 +353,6 @@ void Table::winnerScreen() {
 
 	}
 	
-
-
 void Table::dispJeu() {
 
 
@@ -426,6 +422,7 @@ void Table::displayCards(int nb) {
 
 int Table::getStep(string txt) {
 	try {
+
 		if (txt.substr(0, txt.find_first_of("|")) == "")
 			throw(string("impossible d'acceder au substep"));
 
@@ -440,14 +437,19 @@ int Table::getStep(string txt) {
 
 string Table::read(int onlyIf){
 
+	//Tant qu'on ne lit pas le bon message : on attends
 	while (getStep(od.read(true)) != onlyIf)
 		loading();
+
+
 	string info = od.read(true);
 	string infof;
 	stringstream ss(info);
 	string sousChaine;
 	int i = 0;
 	char delim = '|';
+
+	//On parcourt le string et on le decoupe
 	while (getline(ss, sousChaine, delim))
 	{
 		if (i >1) {
@@ -467,6 +469,7 @@ string Table::read(int onlyIf){
 	else
 		return "-1";
 }
+
 
 void Table::waitAck(int _step)
 {

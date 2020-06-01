@@ -8,10 +8,13 @@
 
 using namespace std;
 
+//Afficher correctement des Shapes
 string map(enum Shape _shape);
 
+//Afficher correctement des ranks
 string map(int _rank);
 
+//Afficher correctement l'étape
 string map(enum Step _step);
 
 //Affiche une ligne de size x car

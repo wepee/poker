@@ -26,6 +26,7 @@ bool sortByRank(Card& a, Card& b) {
 	return (a.getRank() < b.getRank());
 }
 
+//Trouver Paire brelan et Carré
 int getScoreSameRank(vector<Card> deck){	
 	
 	long score = 0;
@@ -78,11 +79,12 @@ int getScoreSameRank(vector<Card> deck){
 	return score;
 }
 
+//Trouver couleur
 int getScoreShape(vector<Card> deck) {
 
 	long score = 0;
 
-	//recherche des combinaisons
+	//recherche des carrés
 	for (vector<Card>::iterator it = deck.begin(); it != deck.end(); it++) {
 
 		//Couleur
@@ -101,11 +103,12 @@ int getScoreShape(vector<Card> deck) {
 	}
 }
 
+//Trouver suite
 int getScoreRank(vector<Card> deck) {
 	long score = 0;
 
 
-	//recherche des combinaisons
+	//recherche de Suite
 	for (vector<Card>::iterator it = deck.begin(); it != deck.end(); it++) {
 
 		//Suite
@@ -122,6 +125,7 @@ int getScoreRank(vector<Card> deck) {
 	return score;
 }
 
+//Trouver les combinaisons
 int Player::getScore(vector<Card> secondHand) {
 	
 	/*
@@ -159,6 +163,7 @@ int Player::getScore(vector<Card> secondHand) {
 	return score;
 }
 
+//Donner _nb cartes de son deck
 vector<Card> Player::giveHand(int _nb) {
 	srand(unsigned(time(0)));
 	try {
@@ -194,6 +199,7 @@ vector<Card> Player::giveHand(int _nb) {
 
 }
 
+//Afficher les cartes
 void Player::displayCards() {
 
 	line(WSIZE/4, " ", false);

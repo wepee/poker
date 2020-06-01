@@ -78,6 +78,7 @@ public:
 	//déroule le game
 	void deroulemain();
 
+	//Calcule les scores et affiche le gagnant
 	void winnerScreen();
 
 	//Destructeur : supprimer le ficher de communication

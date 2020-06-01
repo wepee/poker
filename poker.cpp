@@ -12,7 +12,7 @@ const int WSIZE = 80;
 
 int main()
 {
-
+	//Pour afficher corectement les accents
 	locale::global(std::locale(""));
 
 	//taille de la fenetre
@@ -61,22 +61,6 @@ int main()
 	cin>>key;
 
 
-	//vector<Card> deck = Card::toCards("|carreau*3|carreau*4|carreau*5|carreau*6");
-
-	//Player player(Card::toCards("|pique*2|"));
-
-	//player.getScore(deck);
-	
-
-	//table.send("nique ta mere");
-	//disp(table.read());
-
-	/*vector<Card> maBite = Card::toCards("1|trefle*7|pique*4|pique*2|trefle*9|carreau*3");
-	for (int i = 0; i < maBite.size(); i++)
-		maBite[i].display();*/
-
-
-	//Card card(Shape::Pike, 33);
 	lineBreak(3);
 
 	Table table(key);
@@ -86,9 +70,7 @@ int main()
 	table.deroulemain();
 
 
-	//system("pause");
-
-	//return 0;
+	return 0;
 	
 }
 
